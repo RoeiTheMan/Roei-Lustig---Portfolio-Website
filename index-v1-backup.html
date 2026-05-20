@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Roei Lustig — AI Content Creator &amp; Visual Storyteller</title>
+<meta name="description" content="Roei Lustig — AI content creator and visual storyteller. Films, brand work, and concept pieces." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          base:    '#0a0a0c',
+          surface: '#111114',
+          card:    '#15151a',
+          elev:    '#1c1c22',
+          border:  '#23232a',
+          line:    '#2a2a32',
+          ink:     '#ededed',
+          dim:     '#9c9ca6',
+          mute:    '#5b5b66',
+          coral:   '#ff6a3d',
+          coralDim:'#cc5530',
+        },
+        fontFamily: {
+          sans: ['Geist', 'system-ui', 'sans-serif'],
+          mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
+        },
+        borderRadius: {
+          'xl2':'14px',
+          '2xl2':'18px'
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --base:#0a0a0c;
+    --surface:#111114;
+    --card:#15151a;
+    --elev:#1c1c22;
+    --border:#23232a;
+    --line:#2a2a32;
+    --ink:#ededed;
+    --dim:#9c9ca6;
+    --mute:#5b5b66;
+    --coral:#ff6a3d;
+    --coral-dim:#cc5530;
+  }
+
+  *{ -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+
+  html,body{ background:var(--base); color:var(--ink); }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:'Geist', system-ui, sans-serif;
+    font-weight:400;
+    font-size:15px;
+    line-height:1.55;
+    letter-spacing:-0.005em;
+    overflow-x:hidden;
+  }
+
+  ::selection{ background:var(--coral); color:#fff; }
+
+  /* ===================== TYPE ===================== */
+  .h-display{
+    font-family:'Geist', system-ui, sans-serif;
+    font-weight:500;
+    letter-spacing:-0.035em;
+    line-height:1.02;
+  }
+  .h-display-tight{
+    font-family:'Geist', system-ui, sans-serif;
+    font-weight:600;
+    letter-spacing:-0.04em;
+    line-height:0.98;
+  }
+  .h-section{
+    font-family:'Geist', system-ui, sans-serif;
+    font-weight:500;
+    letter-spacing:-0.03em;
+    line-height:1.05;
+  }
+  .mono{
+    font-family:'Geist Mono', monospace;
+    font-feature-settings:"ss01" 1;
+  }
+  .eyebrow{
+    font-family:'Geist Mono', monospace;
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    color:var(--dim);
+  }
+  .eyebrow-ink{ color:var(--ink); }
+  .eyebrow-coral{ color:var(--coral); }
+
+  /* ===================== BACKGROUND ATMOSPHERE ===================== */
+  .atmos{
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:0;
+    background:
+      radial-gradient(ellipse 800px 600px at 18% -10%, rgba(255,106,61,0.10), transparent 55%),
+      radial-gradient(ellipse 700px 500px at 95% 8%, rgba(80,140,200,0.06), transparent 60%),
+      radial-gradient(ellipse 900px 700px at 50% 100%, rgba(255,106,61,0.04), transparent 60%);
+  }
+  .atmos-grid{
+    position:fixed; inset:0;
+    pointer-events:none;
+    z-index:0;
+    opacity:0.4;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 80%);
+    -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 30%, transparent 80%);
+  }
+
+  /* ===================== HAIRLINES ===================== */
+  .hl{ height:1px; background:var(--border); }
+
+  /* ===================== NAV ===================== */
+  nav.top{
+    position:fixed; top:0; left:0; right:0;
+    z-index:50;
+    transition:padding 0.4s ease;
+    padding-top:18px; padding-bottom:18px;
+  }
+  nav.top .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    max-width:1280px; margin:0 auto;
+    padding:8px 18px 8px 22px;
+    border:1px solid transparent;
+    border-radius:999px;
+    transition:background 0.5s ease, border-color 0.5s ease, backdrop-filter 0.5s ease;
+  }
+  nav.top.scrolled .nav-inner{
+    background:rgba(15,15,18,0.62);
+    border-color:rgba(255,255,255,0.06);
+    backdrop-filter:blur(20px) saturate(140%);
+    -webkit-backdrop-filter:blur(20px) saturate(140%);
+  }
+  .nav-link{
+    color:var(--dim);
+    font-size:14px;
+    font-weight:400;
+    padding:8px 14px;
+    border-radius:999px;
+    transition:color 0.3s, background 0.3s;
+  }
+  .nav-link:hover{ color:var(--ink); background:rgba(255,255,255,0.04); }
+  .nav-link:focus-visible{ outline:none; color:var(--ink); background:rgba(255,255,255,0.06); }
+
+  /* ===================== BUTTONS ===================== */
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    height:44px;
+    padding:0 20px;
+    border-radius:999px;
+    font-size:14px;
+    font-weight:500;
+    letter-spacing:-0.005em;
+    background:var(--ink);
+    color:#0a0a0c;
+    border:1px solid var(--ink);
+    transition:transform 0.3s cubic-bezier(0.22,1,0.36,1), background 0.3s, color 0.3s, border-color 0.3s;
+  }
+  .btn:hover{ background:transparent; color:var(--ink); transform:translateY(-1px); }
+  .btn:active{ transform:translateY(0); }
+  .btn:focus-visible{ outline:2px solid var(--coral); outline-offset:3px; }
+  .btn .arr{ display:inline-block; transition:transform 0.4s cubic-bezier(0.22,1,0.36,1); }
+  .btn:hover .arr{ transform:translateX(4px); }
+
+  .btn-ghost{
+    background:transparent;
+    color:var(--ink);
+    border:1px solid var(--border);
+  }
+  .btn-ghost:hover{ background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.18); transform:translateY(-1px); }
+
+  .btn-accent{
+    background:var(--coral);
+    color:#0a0a0c;
+    border-color:var(--coral);
+  }
+  .btn-accent:hover{ background:transparent; color:var(--coral); }
+
+  /* ===================== PILL / CHIP ===================== */
+  .pill{
+    display:inline-flex; align-items:center; gap:8px;
+    height:30px;
+    padding:0 12px;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,0.02);
+    font-size:12px;
+    font-family:'Geist Mono', monospace;
+    color:var(--dim);
+  }
+  .pill .live-dot{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--coral);
+    box-shadow:0 0 0 0 rgba(255,106,61,0.6);
+    animation:livepulse 2.2s infinite;
+  }
+  @keyframes livepulse{
+    0%  { box-shadow:0 0 0 0 rgba(255,106,61,0.5); }
+    70% { box-shadow:0 0 0 8px rgba(255,106,61,0); }
+    100%{ box-shadow:0 0 0 0 rgba(255,106,61,0); }
+  }
+
+  /* ===================== CARD ===================== */
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    transition:transform 0.5s cubic-bezier(0.22,1,0.36,1), border-color 0.4s ease, background 0.5s ease;
+  }
+  .card:hover{
+    border-color:rgba(255,255,255,0.12);
+    background:var(--elev);
+    transform:translateY(-3px);
+  }
+
+  /* ===================== PROJECT THUMB ===================== */
+  .project{ display:block; color:var(--ink); }
+  .thumb{
+    position:relative;
+    overflow:hidden;
+    border-radius:14px;
+    border:1px solid var(--border);
+    background:var(--card);
+    aspect-ratio:4/5;
+    transition:transform 0.6s cubic-bezier(0.22,1,0.36,1), border-color 0.4s ease;
+  }
+  .thumb.wide{ aspect-ratio:16/10; }
+  .thumb.tall{ aspect-ratio:3/4; }
+  .thumb img{
+    width:100%; height:100%; object-fit:cover;
+    transition:transform 1.4s cubic-bezier(0.22,1,0.36,1), filter 0.6s ease;
+    filter:saturate(0.85) contrast(1.02) brightness(0.92);
+  }
+  .thumb::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(10,10,12,0) 50%, rgba(10,10,12,0.55) 100%);
+    pointer-events:none;
+  }
+  .thumb-tag{
+    position:absolute; top:14px; left:14px;
+    z-index:2;
+    display:inline-flex; align-items:center; gap:6px;
+    height:26px; padding:0 10px;
+    border-radius:999px;
+    background:rgba(10,10,12,0.6);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.1);
+    font-family:'Geist Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.04em;
+    color:var(--ink);
+    text-transform:uppercase;
+  }
+  .thumb-play{
+    position:absolute; bottom:16px; right:16px;
+    z-index:2;
+    width:42px; height:42px;
+    border-radius:50%;
+    background:rgba(10,10,12,0.5);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.1);
+    display:inline-flex; align-items:center; justify-content:center;
+    color:var(--ink);
+    transition:background 0.4s ease, color 0.4s ease, transform 0.4s ease;
+  }
+  .project:hover .thumb{ border-color:rgba(255,255,255,0.18); }
+  .project:hover .thumb img{ transform:scale(1.05); filter:saturate(1) contrast(1.05) brightness(1); }
+  .project:hover .thumb-play{ background:var(--coral); color:#0a0a0c; }
+
+  /* ===================== FILTER ===================== */
+  .filter{
+    height:36px;
+    padding:0 14px;
+    border-radius:999px;
+    border:1px solid transparent;
+    background:transparent;
+    color:var(--dim);
+    font-size:13px;
+    font-family:'Geist', sans-serif;
+    transition:color 0.3s, background 0.3s, border-color 0.3s;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .filter:hover{ color:var(--ink); background:rgba(255,255,255,0.03); }
+  .filter.is-active{
+    color:var(--ink);
+    background:rgba(255,255,255,0.06);
+    border-color:rgba(255,255,255,0.10);
+  }
+  .filter .count{ font-family:'Geist Mono', monospace; font-size:11px; color:var(--mute); }
+  .filter.is-active .count{ color:var(--dim); }
+
+  /* ===================== CATEGORY CARD ===================== */
+  .cat-card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:24px;
+    transition:transform 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.4s ease, background 0.4s ease;
+    display:flex; flex-direction:column;
+    min-height:200px;
+  }
+  .cat-card::before{
+    content:''; position:absolute; inset:0;
+    border-radius:18px;
+    background:radial-gradient(circle at 100% 0%, rgba(255,106,61,0.10), transparent 50%);
+    opacity:0; transition:opacity 0.5s ease;
+    pointer-events:none;
+  }
+  .cat-card:hover{ border-color:rgba(255,255,255,0.14); transform:translateY(-2px); }
+  .cat-card:hover::before{ opacity:1; }
+  .cat-icon{
+    width:36px; height:36px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid var(--border);
+    display:inline-flex; align-items:center; justify-content:center;
+    color:var(--coral);
+  }
+
+  /* ===================== SERVICE CARD ===================== */
+  .svc-card{
+    position:relative;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:28px;
+    transition:transform 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.4s ease, background 0.4s ease;
+    display:flex; flex-direction:column;
+    gap:14px;
+    min-height:220px;
+  }
+  .svc-card:hover{ border-color:rgba(255,255,255,0.14); transform:translateY(-2px); background:var(--elev); }
+  .svc-num{
+    font-family:'Geist Mono', monospace;
+    font-size:12px;
+    color:var(--mute);
+    letter-spacing:0.04em;
+  }
+  .svc-card .arrr{
+    transition:transform 0.4s cubic-bezier(0.22,1,0.36,1), color 0.4s ease;
+    color:var(--mute);
+  }
+  .svc-card:hover .arrr{ transform:translate(4px,-4px); color:var(--coral); }
+
+  /* ===================== STAT ===================== */
+  .stat-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:24px;
+    position:relative;
+    overflow:hidden;
+  }
+  .stat-num{
+    font-family:'Geist', sans-serif;
+    font-weight:500;
+    letter-spacing:-0.035em;
+    line-height:1;
+    font-feature-settings:"tnum" 1, "lnum" 1, "ss01" 1;
+  }
+
+  /* ===================== HERO MEDIA TILE ===================== */
+  .hero-media{
+    position:relative;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid var(--border);
+    background:var(--card);
+    aspect-ratio:5/4;
+  }
+  .hero-media img{
+    width:100%; height:100%; object-fit:cover;
+    filter:saturate(0.85) contrast(1.04) brightness(0.92);
+  }
+  .hero-media::after{
+    content:''; position:absolute; inset:0;
+    background:
+      linear-gradient(180deg, rgba(10,10,12,0) 40%, rgba(10,10,12,0.55) 100%),
+      linear-gradient(45deg, rgba(255,106,61,0.08), transparent 60%);
+  }
+  .hero-meta{
+    position:absolute;
+    left:18px; right:18px; bottom:18px;
+    display:flex; align-items:end; justify-content:space-between;
+    z-index:2;
+  }
+
+  /* ===================== MARQUEE ===================== */
+  .marq{
+    overflow:hidden;
+    white-space:nowrap;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    padding:22px 0;
+    mask-image:linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    -webkit-mask-image:linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  }
+  .marq-track{
+    display:inline-flex; align-items:center; gap:48px;
+    animation:scroll 45s linear infinite;
+    color:var(--dim);
+  }
+  .marq-track .name{
+    font-size:22px;
+    font-weight:500;
+    letter-spacing:-0.025em;
+  }
+  .marq-track .dot{
+    width:5px; height:5px; border-radius:50%;
+    background:var(--coral);
+    flex:none;
+  }
+  @keyframes scroll{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-50%); }
+  }
+  .marq:hover .marq-track{ animation-play-state:paused; }
+
+  /* ===================== REVEAL ===================== */
+  .reveal{ opacity:0; transform:translateY(20px); transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+  .reveal.visible{ opacity:1; transform:translateY(0); }
+  .reveal.d1{ transition-delay:0.06s; }
+  .reveal.d2{ transition-delay:0.12s; }
+  .reveal.d3{ transition-delay:0.18s; }
+  .reveal.d4{ transition-delay:0.24s; }
+  .reveal.d5{ transition-delay:0.30s; }
+  .reveal.d6{ transition-delay:0.36s; }
+
+  /* ===================== PORTRAIT ===================== */
+  .portrait{
+    position:relative; overflow:hidden;
+    border:1px solid var(--border);
+    border-radius:18px;
+    background:var(--card);
+    aspect-ratio:4/5;
+  }
+  .portrait img{ width:100%; height:100%; object-fit:cover; filter:saturate(0.85) contrast(1.04); }
+  .portrait::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(10,10,12,0) 50%, rgba(10,10,12,0.5) 100%);
+  }
+
+  /* ===================== EMAIL CTA ===================== */
+  .email-cta{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:24px;
+    padding:48px;
+    position:relative;
+    overflow:hidden;
+  }
+  .email-cta::before{
+    content:''; position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 60% 60% at 0% 100%, rgba(255,106,61,0.10), transparent 60%),
+      radial-gradient(ellipse 60% 60% at 100% 0%, rgba(255,106,61,0.06), transparent 60%);
+    pointer-events:none;
+  }
+  .email-cta > *{ position:relative; }
+
+  /* ===================== FOOTER ===================== */
+  footer .footer-link{
+    color:var(--dim);
+    font-size:14px;
+    transition:color 0.3s;
+  }
+  footer .footer-link:hover{ color:var(--ink); }
+
+  /* ===================== UTIL ===================== */
+  .ring-coral:focus-visible{ outline:2px solid var(--coral); outline-offset:3px; border-radius:8px; }
+</style>
+</head>
+
+<body>
+
+<!-- Background atmosphere -->
+<div class="atmos-grid"></div>
+<div class="atmos"></div>
+
+<!-- ====================================================== -->
+<!-- NAV -->
+<!-- ====================================================== -->
+<nav class="top" id="topnav">
+  <div class="nav-inner mx-6">
+    <a href="#top" class="flex items-center gap-2.5 px-2">
+      <span class="inline-block w-2 h-2 rounded-full bg-coral"></span>
+      <span class="text-[15px] font-medium tracking-[-0.01em]">Roei Lustig</span>
+      <span class="hidden sm:inline mono text-[11px] text-mute">/studio</span>
+    </a>
+    <ul class="hidden md:flex items-center gap-1">
+      <li><a href="#work"     class="nav-link">Work</a></li>
+      <li><a href="#about"    class="nav-link">About</a></li>
+      <li><a href="#services" class="nav-link">Services</a></li>
+      <li><a href="#contact"  class="nav-link">Contact</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-ghost h-[36px] !px-4 text-[13px]">
+      <span>Get in touch</span>
+      <span class="arr">→</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ====================================================== -->
+<!-- HERO -->
+<!-- ====================================================== -->
+<section id="top" class="relative min-h-screen flex items-center pt-32 pb-20">
+  <div class="relative z-10 max-w-[1280px] mx-auto w-full px-6 grid grid-cols-12 gap-8 items-center">
+
+    <!-- Left: type -->
+    <div class="col-span-12 lg:col-span-7">
+      <div class="reveal">
+        <span class="pill mb-8">
+          <span class="live-dot"></span>
+          <span>Open for Q3 — Q4 / 2026</span>
+        </span>
+      </div>
+
+      <h1 class="reveal d1 h-display-tight text-ink text-[clamp(44px,7vw,92px)] mb-8 max-w-[14ch]">
+        AI films built<br/>
+        for the way<br/>
+        the world <span class="text-coral">scrolls</span>.
+      </h1>
+
+      <p class="reveal d2 text-dim text-[17px] leading-[1.55] max-w-[520px] mb-10">
+        Roei Lustig is an AI content creator and visual storyteller working at the
+        edge of generative tools. Short films, brand work, and concept pieces
+        that hold up at frame‑rate one and the algorithm.
+      </p>
+
+      <div class="reveal d3 flex flex-wrap items-center gap-3">
+        <a href="#work" class="btn">
+          <span>View selected work</span>
+          <span class="arr">→</span>
+        </a>
+        <a href="#contact" class="btn btn-ghost">
+          <span>Start a project</span>
+        </a>
+      </div>
+
+      <div class="reveal d4 mt-14 flex items-center gap-8">
+        <div>
+          <div class="eyebrow mb-2">Based</div>
+          <div class="text-[15px] text-ink">Tel Aviv → Berlin</div>
+        </div>
+        <div class="w-px h-10 bg-border"></div>
+        <div>
+          <div class="eyebrow mb-2">Replies in</div>
+          <div class="text-[15px] text-ink">~ 48 hours</div>
+        </div>
+        <div class="w-px h-10 bg-border hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <div class="eyebrow mb-2">Trust</div>
+          <div class="text-[15px] text-ink">12 brands &middot; 500M+ views</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: featured film tile -->
+    <div class="col-span-12 lg:col-span-5 reveal d2">
+      <div class="hero-media">
+        <img src="https://picsum.photos/seed/atmosphere-hero/900/720" alt="Featured film — Atmosphere" />
+        <div class="absolute top-4 left-4 z-[2]">
+          <span class="pill !bg-[rgba(10,10,12,0.55)] !backdrop-blur-md">
+            <span class="live-dot"></span>
+            <span>Now Playing — Showreel 2026</span>
+          </span>
+        </div>
+        <div class="hero-meta">
+          <div>
+            <div class="eyebrow eyebrow-coral mb-1">Featured</div>
+            <div class="text-ink text-[18px] font-medium">Atmosphere — Vol. 04</div>
+          </div>
+          <button aria-label="Play showreel" class="thumb-play !relative !right-auto !bottom-auto">
+            <svg width="13" height="14" viewBox="0 0 13 14" fill="currentColor"><path d="M0 0 L13 7 L0 14 Z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- mini bottom stat -->
+      <div class="mt-4 flex items-center gap-3 mono text-[11px] text-mute">
+        <span>02:14</span><span>·</span><span>Dir. R. Lustig</span><span>·</span><span>2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- STATS -->
+<!-- ====================================================== -->
+<section class="relative z-10 px-6 mt-4">
+  <div class="max-w-[1280px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div class="stat-card reveal">
+      <div class="eyebrow mb-6">01 — Reach</div>
+      <div class="stat-num text-ink text-[clamp(36px,4vw,54px)]">500<span class="text-coral">M+</span></div>
+      <div class="text-dim text-[13px] mt-2">Organic views across platforms</div>
+    </div>
+    <div class="stat-card reveal d1">
+      <div class="eyebrow mb-6">02 — Tenure</div>
+      <div class="stat-num text-ink text-[clamp(36px,4vw,54px)]">03<span class="text-coral">+</span></div>
+      <div class="text-dim text-[13px] mt-2">Years directing AI</div>
+    </div>
+    <div class="stat-card reveal d2">
+      <div class="eyebrow mb-6">03 — Brands</div>
+      <div class="stat-num text-ink text-[clamp(36px,4vw,54px)]">12<span class="text-coral">+</span></div>
+      <div class="text-dim text-[13px] mt-2">Commissioned projects</div>
+    </div>
+    <div class="stat-card reveal d3">
+      <div class="eyebrow mb-6">04 — Pieces</div>
+      <div class="stat-num text-ink text-[clamp(36px,4vw,54px)]">64</div>
+      <div class="text-dim text-[13px] mt-2">Films delivered</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- MARQUEE -->
+<!-- ====================================================== -->
+<div class="marq mt-24">
+  <div class="marq-track">
+    <span class="name">Hermès</span><span class="dot"></span>
+    <span class="name">Aesop</span><span class="dot"></span>
+    <span class="name">Off‑White</span><span class="dot"></span>
+    <span class="name">Reuters</span><span class="dot"></span>
+    <span class="name">SSENSE</span><span class="dot"></span>
+    <span class="name">Apple TV+</span><span class="dot"></span>
+    <span class="name">Cannes Next</span><span class="dot"></span>
+    <span class="name">Wieden+Kennedy</span><span class="dot"></span>
+    <span class="name">A24</span><span class="dot"></span>
+    <span class="name">Vimeo Staff Picks</span><span class="dot"></span>
+    <!-- duplicate -->
+    <span class="name">Hermès</span><span class="dot"></span>
+    <span class="name">Aesop</span><span class="dot"></span>
+    <span class="name">Off‑White</span><span class="dot"></span>
+    <span class="name">Reuters</span><span class="dot"></span>
+    <span class="name">SSENSE</span><span class="dot"></span>
+    <span class="name">Apple TV+</span><span class="dot"></span>
+    <span class="name">Cannes Next</span><span class="dot"></span>
+    <span class="name">Wieden+Kennedy</span><span class="dot"></span>
+    <span class="name">A24</span><span class="dot"></span>
+    <span class="name">Vimeo Staff Picks</span><span class="dot"></span>
+  </div>
+</div>
+
+<!-- ====================================================== -->
+<!-- SELECTED WORK -->
+<!-- ====================================================== -->
+<section id="work" class="relative z-10 pt-28 pb-24 px-6">
+  <div class="max-w-[1280px] mx-auto">
+
+    <div class="grid grid-cols-12 gap-8 mb-14 items-end">
+      <div class="col-span-12 md:col-span-7 reveal">
+        <div class="eyebrow mb-4"><span class="eyebrow-coral">02</span> &nbsp;·&nbsp; Selected Work</div>
+        <h2 class="h-display text-ink text-[clamp(36px,4.6vw,64px)] max-w-[14ch]">
+          Seven films from<br/>the last twelve months.
+        </h2>
+      </div>
+      <div class="col-span-12 md:col-span-4 md:col-start-9 reveal d1">
+        <p class="text-dim text-[15px] leading-[1.6]">
+          A working archive — commissions, concepts, and the experiments that
+          earned their way out of the studio.
+        </p>
+      </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="reveal flex flex-wrap items-center gap-2 mb-10">
+      <button class="filter is-active">All <span class="count">07</span></button>
+      <button class="filter">Entertainment <span class="count">02</span></button>
+      <button class="filter">Brand <span class="count">02</span></button>
+      <button class="filter">Social <span class="count">01</span></button>
+      <button class="filter">Concepts <span class="count">01</span></button>
+      <button class="filter">Corporate <span class="count">01</span></button>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-12 gap-5">
+
+      <a href="projects/atmosphere.html" class="project col-span-12 md:col-span-7">
+        <div class="thumb wide">
+          <img src="https://picsum.photos/seed/atmosphere-grid/1200/750" alt="Atmosphere" />
+          <span class="thumb-tag">Entertainment · Short Film · 2026</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">Atmosphere</h3>
+            <p class="text-dim text-[14px] mt-1">A four‑minute meditation on weather, memory, and machine recall.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">01 / 07</span>
+        </div>
+      </a>
+
+      <a href="projects/levana-lucid-dream.html" class="project col-span-12 md:col-span-5">
+        <div class="thumb tall">
+          <img src="https://picsum.photos/seed/levana-lucid/800/1066" alt="Levana — Lucid Dream" />
+          <span class="thumb-tag">Brand · Music · 2025</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">Levana — Lucid Dream</h3>
+            <p class="text-dim text-[14px] mt-1">A campaign film for Levana's S/S drop, directed and finished in‑studio.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">02 / 07</span>
+        </div>
+      </a>
+
+      <a href="projects/quiet-index.html" class="project col-span-12 md:col-span-4">
+        <div class="thumb">
+          <img src="https://picsum.photos/seed/quiet-index/700/875" alt="Quiet Index" />
+          <span class="thumb-tag">Concept · 2025</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[20px]">Quiet Index</h3>
+            <p class="text-dim text-[13px] mt-1">A self‑initiated concept short.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">03</span>
+        </div>
+      </a>
+
+      <a href="projects/morrow-skincare.html" class="project col-span-12 md:col-span-4">
+        <div class="thumb">
+          <img src="https://picsum.photos/seed/morrow-skin/700/875" alt="Morrow Skincare" />
+          <span class="thumb-tag">Social · Brand · 2025</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[20px]">Morrow — Skincare</h3>
+            <p class="text-dim text-[13px] mt-1">Performance‑driven social.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">04</span>
+        </div>
+      </a>
+
+      <a href="projects/hermes-carre-90.html" class="project col-span-12 md:col-span-4">
+        <div class="thumb">
+          <img src="https://picsum.photos/seed/hermes-carre/700/875" alt="Hermès — Carré 90" />
+          <span class="thumb-tag">Brand · Luxury · 2024</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[20px]">Hermès — Carré 90</h3>
+            <p class="text-dim text-[13px] mt-1">A 30s spot for the silk archive.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">05</span>
+        </div>
+      </a>
+
+      <a href="projects/field-notes.html" class="project col-span-12 md:col-span-6">
+        <div class="thumb wide">
+          <img src="https://picsum.photos/seed/field-notes/1000/625" alt="Field Notes — Vol. 01" />
+          <span class="thumb-tag">Creative Experiments · 2024</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[20px]">Field Notes — Vol. 01</h3>
+            <p class="text-dim text-[13px] mt-1">A reel of in‑progress experiments.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">06</span>
+        </div>
+      </a>
+
+      <a href="projects/reuters-special.html" class="project col-span-12 md:col-span-6">
+        <div class="thumb wide">
+          <img src="https://picsum.photos/seed/reuters-spec/1000/625" alt="Reuters — Special Report" />
+          <span class="thumb-tag">Corporate · Editorial · 2024</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[20px]">Reuters — Special Report</h3>
+            <p class="text-dim text-[13px] mt-1">A long‑form editorial film.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">07</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="mt-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <p class="text-dim text-[14px] max-w-md">
+        Five more pieces in the full archive — including private commissions and unreleased experiments.
+      </p>
+      <a href="#" class="btn btn-ghost">
+        <span>Browse full archive</span>
+        <span class="arr">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- CONCEPTS CALLOUT -->
+<!-- ====================================================== -->
+<section class="relative z-10 pt-16 pb-24 px-6">
+  <div class="max-w-[1280px] mx-auto">
+    <div class="card p-10 lg:p-14">
+      <div class="grid grid-cols-12 gap-10 items-start">
+        <div class="col-span-12 md:col-span-5 reveal">
+          <div class="eyebrow mb-4"><span class="eyebrow-coral">03</span> &nbsp;·&nbsp; A note from the studio</div>
+          <h2 class="h-display text-ink text-[clamp(28px,3.4vw,46px)] max-w-[16ch]">
+            Concept films are not lesser films.
+          </h2>
+        </div>
+        <div class="col-span-12 md:col-span-6 md:col-start-7 reveal d1 space-y-5 text-[15.5px] leading-[1.6]">
+          <p class="text-ink">
+            About a third of what you'll see here was never commissioned. It was
+            made because the image didn't exist yet — to pitch a film, to break
+            a tool, to prove that a frame could hold.
+          </p>
+          <p class="text-dim">
+            The studio labels self‑initiated work plainly. <span class="text-ink">Concept</span>
+            means nobody paid for it. It does not mean the craft was lighter,
+            the budget smaller, or the result less considered.
+          </p>
+          <p class="text-dim">Treat concept films as direction reels for the work that's coming next.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- CATEGORIES -->
+<!-- ====================================================== -->
+<section class="relative z-10 pt-16 pb-24 px-6">
+  <div class="max-w-[1280px] mx-auto">
+    <div class="grid grid-cols-12 gap-8 items-end mb-12">
+      <div class="col-span-12 md:col-span-7 reveal">
+        <div class="eyebrow mb-4"><span class="eyebrow-coral">04</span> &nbsp;·&nbsp; Disciplines</div>
+        <h2 class="h-display text-ink text-[clamp(36px,4.6vw,60px)] max-w-[16ch]">Six rooms, one studio.</h2>
+      </div>
+      <p class="reveal d1 col-span-12 md:col-span-4 md:col-start-9 text-dim text-[14.5px] leading-[1.6]">
+        The studio works across format, budget, and platform. Each discipline
+        links to a curated sub‑reel.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <a href="#" class="cat-card reveal">
+        <span class="cat-icon mb-6">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5 L21 5 L21 19 L3 19 Z"/><path d="M3 9 L21 9"/><circle cx="7" cy="7" r="0.6"/><circle cx="10" cy="7" r="0.6"/></svg>
+        </span>
+        <h3 class="text-ink text-[18px] font-medium mb-2 tracking-[-0.02em]">Entertainment AI Content</h3>
+        <p class="text-dim text-[13.5px] leading-[1.6]">Short films, episodic, and narrative pieces built for streamers, festivals, and platforms.</p>
+        <div class="mt-auto pt-6 flex items-center justify-between">
+          <span class="mono text-[11px] text-mute">12 pieces</span>
+          <span class="text-mute text-[16px]">→</span>
+        </div>
+      </a>
+
+      <a href="#" class="cat-card reveal d1">
+        <span class="cat-icon mb-6">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 3 L19 3 L19 21 L5 21 Z"/><path d="M9 8 L15 8"/><path d="M9 12 L15 12"/></svg>
+        </span>
+        <h3 class="text-ink text-[18px] font-medium mb-2 tracking-[-0.02em]">Marketing &amp; Brand</h3>
+        <p class="text-dim text-[13.5px] leading-[1.6]">Campaign films, identity films, and hero spots for luxury, fashion, and tech.</p>
+        <div class="mt-auto pt-6 flex items-center justify-between">
+          <span class="mono text-[11px] text-mute">19 pieces</span>
+          <span class="text-mute text-[16px]">→</span>
+        </div>
+      </a>
+
+      <a href="#" class="cat-card reveal d2">
+        <span class="cat-icon mb-6">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M11 18 L13 18"/></svg>
+        </span>
+        <h3 class="text-ink text-[18px] font-medium mb-2 tracking-[-0.02em]">Social AI Content</h3>
+        <p class="text-dim text-[13.5px] leading-[1.6]">Vertical shorts for TikTok, Reels, and Shorts. Performance‑driven, built to travel.</p>
+        <div class="mt-auto pt-6 flex items-center justify-between">
+          <span class="mono text-[11px] text-mute">22 pieces</span>
+          <span class="text-mute text-[16px]">→</span>
+        </div>
+      </a>
+
+      <a href="#" class="cat-card reveal">
+        <span class="cat-icon mb-6">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12 L9 6 L9 9 L15 9 L15 6 L21 12 L15 18 L15 15 L9 15 L9 18 Z"/></svg>
+        </span>
+        <h3 class="text-ink text-[18px] font-medium mb-2 tracking-[-0.02em]">AI Video Concepts</h3>
+        <p class="text-dim text-[13.5px] leading-[1.6]">Treatments and look‑films. Often the best way to win a pitch is to shoot it first.</p>
+        <div class="mt-auto pt-6 flex items-center justify-between">
+          <span class="mono text-[11px] text-mute">14 pieces</span>
+          <span class="text-mute text-[16px]">→</span>
+        </div>
+      </a>
+
+      <a href="#" class="cat-card reveal d1">
+        <span class="cat-icon mb-6">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="14" rx="1.5"/><path d="M7 6 L7 3 L17 3 L17 6"/></svg>
+        </span>
+        <h3 class="text-ink text-[18px] font-medium mb-2 tracking-[-0.02em]">Professional &amp; Corporate</h3>
+        <p class="text-dim text-[13.5px] leading-[1.6]">Editorial pieces for newsrooms, foundations, and enterprises with stories worth telling well.</p>
+        <div class="mt-auto pt-6 flex items-center justify-between">
+          <span class="mono text-[11px] text-mute">08 pieces</span>
+          <span class="text-mute text-[16px]">→</span>
+        </div>
+      </a>
+
+      <a href="#" class="cat-card reveal d2">
+        <span class="cat-icon mb-6">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 L12 21"/><path d="M3 12 L21 12"/><circle cx="12" cy="12" r="3.6"/></svg>
+        </span>
+        <h3 class="text-ink text-[18px] font-medium mb-2 tracking-[-0.02em]">Creative Experiments</h3>
+        <p class="text-dim text-[13.5px] leading-[1.6]">R&amp;D pieces — pipelines, tools, and unreleased films from the studio's lab.</p>
+        <div class="mt-auto pt-6 flex items-center justify-between">
+          <span class="mono text-[11px] text-mute">17 pieces</span>
+          <span class="text-mute text-[16px]">→</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- ABOUT -->
+<!-- ====================================================== -->
+<section id="about" class="relative z-10 pt-16 pb-24 px-6">
+  <div class="max-w-[1280px] mx-auto grid grid-cols-12 gap-10 items-start">
+
+    <div class="col-span-12 md:col-span-5 reveal">
+      <div class="portrait">
+        <img src="https://picsum.photos/seed/roei-portrait/720/900" alt="Portrait of Roei Lustig" />
+      </div>
+      <div class="mt-3 flex items-center justify-between mono text-[11px] text-mute">
+        <span>FIG. 01 — TLV STUDIO, 2026</span>
+        <span>35MM</span>
+      </div>
+    </div>
+
+    <div class="col-span-12 md:col-span-6 md:col-start-7 reveal d1">
+      <div class="eyebrow mb-4"><span class="eyebrow-coral">05</span> &nbsp;·&nbsp; About</div>
+      <h2 class="h-display text-ink text-[clamp(36px,4.6vw,58px)] mb-8 max-w-[16ch]">
+        Director's eye.<br/>Prompter's patience.
+      </h2>
+
+      <div class="space-y-5 text-[15.5px] leading-[1.65]">
+        <p class="text-ink">
+          Roei Lustig is an AI content creator and visual storyteller based
+          between Tel Aviv and Berlin. The studio directs short films, brand
+          work, and concept pieces using generative tools as a camera, a
+          crew, and a darkroom.
+        </p>
+        <p class="text-dim">
+          He came up in live‑action direction in 2017, then turned fully
+          toward generative workflows in late 2022. The studio treats every
+          frame like a frame — composed, color‑graded, and earned.
+        </p>
+        <p class="text-dim">
+          Past collaborators include luxury houses, independent musicians,
+          news organizations, and a handful of agencies that prefer the back
+          door. Three to five engagements a year.
+        </p>
+      </div>
+
+      <div class="mt-10 grid grid-cols-2 gap-y-6 gap-x-8 pt-8 border-t border-border">
+        <div>
+          <div class="eyebrow mb-1.5">Based</div>
+          <div class="text-ink text-[15px]">Tel Aviv → Berlin</div>
+        </div>
+        <div>
+          <div class="eyebrow mb-1.5">Active since</div>
+          <div class="text-ink text-[15px]">2017</div>
+        </div>
+        <div>
+          <div class="eyebrow mb-1.5">Languages</div>
+          <div class="text-ink text-[15px]">EN · HE · DE</div>
+        </div>
+        <div>
+          <div class="eyebrow mb-1.5">Representation</div>
+          <div class="text-ink text-[15px]">Direct only</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- SERVICES -->
+<!-- ====================================================== -->
+<section id="services" class="relative z-10 pt-16 pb-24 px-6">
+  <div class="max-w-[1280px] mx-auto">
+
+    <div class="grid grid-cols-12 gap-8 mb-12 items-end">
+      <div class="col-span-12 md:col-span-7 reveal">
+        <div class="eyebrow mb-4"><span class="eyebrow-coral">06</span> &nbsp;·&nbsp; Services</div>
+        <h2 class="h-display text-ink text-[clamp(36px,4.6vw,60px)] max-w-[14ch]">What the studio does.</h2>
+      </div>
+      <p class="reveal d1 col-span-12 md:col-span-4 md:col-start-9 text-dim text-[14.5px] leading-[1.6]">
+        Six engagement models. Each scoped tightly. Send a brief — replies
+        within 48 hours.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <a href="#contact" class="svc-card reveal">
+        <div class="flex items-start justify-between mb-2">
+          <span class="svc-num">01 / 06</span>
+          <span class="arrr text-[18px]">↗</span>
+        </div>
+        <h3 class="text-ink text-[20px] font-medium tracking-[-0.025em]">AI Direction</h3>
+        <p class="text-dim text-[14px] leading-[1.6]">End‑to‑end generative direction. Treatment, boards, shoot, post — all under one roof.</p>
+        <div class="mt-auto pt-4 mono text-[11px] text-mute">Treatment · Boards · Shoot · Post</div>
+      </a>
+
+      <a href="#contact" class="svc-card reveal d1">
+        <div class="flex items-start justify-between mb-2">
+          <span class="svc-num">02 / 06</span>
+          <span class="arrr text-[18px]">↗</span>
+        </div>
+        <h3 class="text-ink text-[20px] font-medium tracking-[-0.025em]">Brand Films</h3>
+        <p class="text-dim text-[14px] leading-[1.6]">Hero, manifesto, and identity films for fashion, beauty, hospitality, and tech.</p>
+        <div class="mt-auto pt-4 mono text-[11px] text-mute">Campaign · Identity · Hero</div>
+      </a>
+
+      <a href="#contact" class="svc-card reveal d2">
+        <div class="flex items-start justify-between mb-2">
+          <span class="svc-num">03 / 06</span>
+          <span class="arrr text-[18px]">↗</span>
+        </div>
+        <h3 class="text-ink text-[20px] font-medium tracking-[-0.025em]">Concept Pitching</h3>
+        <p class="text-dim text-[14px] leading-[1.6]">Look films and animated treatments that move. The fastest way to win a pitch.</p>
+        <div class="mt-auto pt-4 mono text-[11px] text-mute">Treatments · Look Films · Decks</div>
+      </a>
+
+      <a href="#contact" class="svc-card reveal">
+        <div class="flex items-start justify-between mb-2">
+          <span class="svc-num">04 / 06</span>
+          <span class="arrr text-[18px]">↗</span>
+        </div>
+        <h3 class="text-ink text-[20px] font-medium tracking-[-0.025em]">Social Content</h3>
+        <p class="text-dim text-[14px] leading-[1.6]">Short‑form, performance‑driven AI content built for vertical surfaces.</p>
+        <div class="mt-auto pt-4 mono text-[11px] text-mute">TikTok · Reels · Shorts</div>
+      </a>
+
+      <a href="#contact" class="svc-card reveal d1">
+        <div class="flex items-start justify-between mb-2">
+          <span class="svc-num">05 / 06</span>
+          <span class="arrr text-[18px]">↗</span>
+        </div>
+        <h3 class="text-ink text-[20px] font-medium tracking-[-0.025em]">Visual Development</h3>
+        <p class="text-dim text-[14px] leading-[1.6]">Bespoke style‑frame packs, character design, and pipeline tests for productions in prep.</p>
+        <div class="mt-auto pt-4 mono text-[11px] text-mute">R&amp;D · Style Frames</div>
+      </a>
+
+      <a href="#contact" class="svc-card reveal d2">
+        <div class="flex items-start justify-between mb-2">
+          <span class="svc-num">06 / 06</span>
+          <span class="arrr text-[18px]">↗</span>
+        </div>
+        <h3 class="text-ink text-[20px] font-medium tracking-[-0.025em]">Creative Consulting</h3>
+        <p class="text-dim text-[14px] leading-[1.6]">Embedded sprints with in‑house teams — pipeline, prompt craft, taste calibration.</p>
+        <div class="mt-auto pt-4 mono text-[11px] text-mute">Workshops · Pipelines</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- CONTACT -->
+<!-- ====================================================== -->
+<section id="contact" class="relative z-10 pt-16 pb-24 px-6">
+  <div class="max-w-[1280px] mx-auto">
+    <div class="email-cta">
+      <div class="reveal mb-8">
+        <div class="eyebrow mb-4"><span class="eyebrow-coral">07</span> &nbsp;·&nbsp; Contact</div>
+        <h2 class="h-display-tight text-ink text-[clamp(40px,6vw,84px)] max-w-[16ch]">
+          Have a film in mind?
+        </h2>
+        <p class="mt-5 text-dim text-[16px] max-w-[520px] leading-[1.6]">
+          Briefs reviewed within 48 hours. Currently accepting Q3 — Q4 2026 commissions.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-12 gap-8 items-end reveal d1">
+        <div class="col-span-12 md:col-span-7">
+          <div class="eyebrow mb-3">Direct line</div>
+          <a href="mailto:roeilustig@gmail.com" class="group inline-flex items-center gap-3 text-ink hover:text-coral transition-colors">
+            <span class="h-section text-[clamp(24px,3vw,40px)]">roeilustig@gmail.com</span>
+            <span class="text-[20px] transition-transform group-hover:translate-x-1">↗</span>
+          </a>
+        </div>
+        <div class="col-span-12 md:col-span-4 md:col-start-9 flex md:justify-end">
+          <a href="mailto:roeilustig@gmail.com" class="btn btn-accent">
+            <span>Send a brief</span>
+            <span class="arr">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal d2 mt-12 pt-8 border-t border-border grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-6">
+        <div>
+          <div class="eyebrow mb-2">Instagram</div>
+          <a href="#" class="text-ink hover:text-coral text-[15px] transition-colors">@roeilustig</a>
+        </div>
+        <div>
+          <div class="eyebrow mb-2">LinkedIn</div>
+          <a href="#" class="text-ink hover:text-coral text-[15px] transition-colors">Roei Lustig</a>
+        </div>
+        <div>
+          <div class="eyebrow mb-2">WhatsApp</div>
+          <a href="#" class="text-ink hover:text-coral text-[15px] transition-colors">+972 · Direct</a>
+        </div>
+        <div>
+          <div class="eyebrow mb-2">Vimeo</div>
+          <a href="#" class="text-ink hover:text-coral text-[15px] transition-colors">/roeilustig</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====================================================== -->
+<!-- FOOTER -->
+<!-- ====================================================== -->
+<footer class="relative z-10 border-t border-border mt-12 px-6">
+  <div class="max-w-[1280px] mx-auto py-12 grid grid-cols-12 gap-8">
+    <div class="col-span-12 md:col-span-5">
+      <div class="flex items-center gap-2.5 mb-3">
+        <span class="inline-block w-2 h-2 rounded-full bg-coral"></span>
+        <span class="text-ink text-[15px] font-medium">Roei Lustig</span>
+        <span class="mono text-[11px] text-mute">/studio</span>
+      </div>
+      <p class="text-dim text-[14px] max-w-sm">AI content creator and visual storyteller. Films for the way the world scrolls.</p>
+    </div>
+
+    <div class="col-span-6 md:col-span-3 md:col-start-7">
+      <div class="eyebrow mb-3">Sitemap</div>
+      <ul class="space-y-2">
+        <li><a href="#work" class="footer-link">Selected Work</a></li>
+        <li><a href="#about" class="footer-link">About</a></li>
+        <li><a href="#services" class="footer-link">Services</a></li>
+        <li><a href="#contact" class="footer-link">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="col-span-6 md:col-span-3">
+      <div class="eyebrow mb-3">Elsewhere</div>
+      <ul class="space-y-2">
+        <li><a href="#" class="footer-link">Instagram ↗</a></li>
+        <li><a href="#" class="footer-link">LinkedIn ↗</a></li>
+        <li><a href="#" class="footer-link">Vimeo ↗</a></li>
+        <li><a href="#" class="footer-link">WhatsApp ↗</a></li>
+      </ul>
+    </div>
+
+    <div class="col-span-12 pt-8 border-t border-border flex flex-col md:flex-row md:items-center justify-between gap-3 text-[12px] text-mute mono">
+      <div>© 2026 Roei Lustig Studio. All rights reserved.</div>
+      <div>Built in TLV · v.03</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ====================================================== -->
+<!-- JS -->
+<!-- ====================================================== -->
+<script>
+  // Nav scrolled state
+  const topnav = document.getElementById('topnav');
+  function onScroll(){
+    if (window.scrollY > 30) topnav.classList.add('scrolled');
+    else topnav.classList.remove('scrolled');
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  // Reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold:0.05, rootMargin:'0px 0px -5% 0px' });
+  reveals.forEach(el => io.observe(el));
+
+  // Safety net for full-page screenshots / reduced-motion
+  window.addEventListener('load', () => {
+    setTimeout(() => { reveals.forEach(el => el.classList.add('visible')); }, 600);
+  });
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    reveals.forEach(el => el.classList.add('visible'));
+  }
+
+  // Filter toggle (visual)
+  document.querySelectorAll('.filter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter').forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+    });
+  });
+</script>
+
+</body>
+</html>
