@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -252,6 +252,11 @@
     transition:transform 1.4s cubic-bezier(0.22,1,0.36,1), filter 0.6s ease;
     filter:saturate(0.85) contrast(1.02) brightness(0.92);
   }
+  .thumb video{
+    width:100%; height:100%; object-fit:cover; display:block;
+    transition:filter 0.6s ease;
+    filter:saturate(0.85) contrast(1.02) brightness(0.92);
+  }
   .thumb::after{
     content:''; position:absolute; inset:0;
     background:linear-gradient(180deg, rgba(10,10,12,0) 50%, rgba(10,10,12,0.55) 100%);
@@ -288,7 +293,10 @@
   }
   .project:hover .thumb{ border-color:rgba(255,255,255,0.18); }
   .project:hover .thumb img{ transform:scale(1.05); filter:saturate(1) contrast(1.05) brightness(1); }
+  .project:hover .thumb video{ filter:saturate(1) contrast(1.05) brightness(1); }
   .project:hover .thumb-play{ background:var(--coral); color:#0a0a0c; }
+  .fav-slide{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transform:scale(1.06); transition:opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 6s ease-out; }
+  .fav-slide.active{ opacity:1; transform:scale(1.0); }
 
   /* ===================== FILTER ===================== */
   .filter{
@@ -420,25 +428,37 @@
     -webkit-mask-image:linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
   }
   .marq-track{
-    display:inline-flex; align-items:center; gap:48px;
-    animation:scroll 45s linear infinite;
-    color:var(--dim);
+    display:inline-flex; align-items:center; gap:56px;
+    animation:scroll 50s linear infinite;
   }
-  .marq-track .name{
-    font-size:22px;
-    font-weight:500;
-    letter-spacing:-0.025em;
+  .marq-logo{
+    height:42px;
+    width:auto;
+    max-width:200px;
+    object-fit:contain;
+    opacity:0.55;
+    filter:brightness(0) invert(1);
+    flex:none;
+    transition:opacity 0.25s;
   }
-  .marq-track .dot{
+  .marq-logo-lg{ height:110px; }
+  .marq-logo-md{ transform:scale(1.25); }
+  .marq-logo-film{ filter:grayscale(1) invert(1); }
+  .marq-dot{
     width:5px; height:5px; border-radius:50%;
     background:var(--coral);
     flex:none;
   }
+  .marq:hover .marq-logo{ opacity:0.85; }
   @keyframes scroll{
     0%{ transform:translateX(0); }
     100%{ transform:translateX(-50%); }
   }
   .marq:hover .marq-track{ animation-play-state:paused; }
+  .marq-wordmark{ display:inline-flex; align-items:center; gap:9px; opacity:0.55; transition:opacity 0.25s; }
+  .marq-wordmark img{ height:36px; width:auto; filter:grayscale(1) brightness(1.3); }
+  .marq-wordmark span{ font-family:'Geist',sans-serif; font-weight:900; font-size:20px; letter-spacing:0.04em; color:#fff; white-space:nowrap; }
+  .marq:hover .marq-wordmark{ opacity:0.85; }
 
   /* ===================== REVEAL ===================== */
   .reveal{ opacity:0; transform:translateY(20px); transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1); }
@@ -564,17 +584,17 @@
       <div class="reveal d4 mt-14 flex items-center gap-8">
         <div>
           <div class="eyebrow mb-2">Based</div>
-          <div class="text-[15px] text-ink">Tel Aviv → Berlin</div>
+          <div class="text-[15px] text-ink">Tel Aviv</div>
         </div>
         <div class="w-px h-10 bg-border"></div>
         <div>
-          <div class="eyebrow mb-2">Replies in</div>
-          <div class="text-[15px] text-ink">~ 48 hours</div>
+          <div class="eyebrow mb-2">Available</div>
+          <div class="text-[15px] text-ink">Remote — worldwide</div>
         </div>
         <div class="w-px h-10 bg-border hidden sm:block"></div>
         <div class="hidden sm:block">
-          <div class="eyebrow mb-2">Trust</div>
-          <div class="text-[15px] text-ink">12 brands &middot; 500M+ views</div>
+          <div class="eyebrow mb-2">Process</div>
+          <div class="text-[15px] text-ink">Concept → Script → Direct → Deliver</div>
         </div>
       </div>
     </div>
@@ -625,43 +645,56 @@
     </div>
     <div class="stat-card reveal d2">
       <div class="eyebrow mb-6">03 — Brands</div>
-      <div class="stat-num text-ink text-[clamp(36px,4vw,54px)]">12<span class="text-coral">+</span></div>
-      <div class="text-dim text-[13px] mt-2">Commissioned projects</div>
+      <div class="stat-num text-ink text-[clamp(36px,4vw,54px)]">20<span class="text-coral">+</span></div>
+      <div class="text-dim text-[13px] mt-2">Unique clients</div>
     </div>
     <div class="stat-card reveal d3">
       <div class="eyebrow mb-6">04 — Pieces</div>
-      <div class="stat-num text-ink text-[clamp(36px,4vw,54px)]">64</div>
+      <div class="stat-num text-ink text-[clamp(36px,4vw,54px)]">250<span class="text-coral">+</span></div>
       <div class="text-dim text-[13px] mt-2">Films delivered</div>
     </div>
   </div>
 </section>
 
 <!-- ====================================================== -->
-<!-- MARQUEE -->
+<!-- BRANDS MARQUEE -->
 <!-- ====================================================== -->
-<div class="marq mt-24">
-  <div class="marq-track">
-    <span class="name">Hermès</span><span class="dot"></span>
-    <span class="name">Aesop</span><span class="dot"></span>
-    <span class="name">Off‑White</span><span class="dot"></span>
-    <span class="name">Reuters</span><span class="dot"></span>
-    <span class="name">SSENSE</span><span class="dot"></span>
-    <span class="name">Apple TV+</span><span class="dot"></span>
-    <span class="name">Cannes Next</span><span class="dot"></span>
-    <span class="name">Wieden+Kennedy</span><span class="dot"></span>
-    <span class="name">A24</span><span class="dot"></span>
-    <span class="name">Vimeo Staff Picks</span><span class="dot"></span>
-    <!-- duplicate -->
-    <span class="name">Hermès</span><span class="dot"></span>
-    <span class="name">Aesop</span><span class="dot"></span>
-    <span class="name">Off‑White</span><span class="dot"></span>
-    <span class="name">Reuters</span><span class="dot"></span>
-    <span class="name">SSENSE</span><span class="dot"></span>
-    <span class="name">Apple TV+</span><span class="dot"></span>
-    <span class="name">Cannes Next</span><span class="dot"></span>
-    <span class="name">Wieden+Kennedy</span><span class="dot"></span>
-    <span class="name">A24</span><span class="dot"></span>
-    <span class="name">Vimeo Staff Picks</span><span class="dot"></span>
+<div class="relative z-10 mt-24">
+  <div class="max-w-[1280px] mx-auto px-6 mb-8 text-center">
+    <p class="eyebrow tracking-[0.14em]">Brands I've Worked With</p>
+  </div>
+  <div class="marq">
+    <div class="marq-track">
+      <img class="marq-logo" src="partners%20logos/Full%20white%20logo.png" alt="Quantum Machines" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-lg" src="partners%20logos/Flowith-Ai-Logo-PNG-SVG-Vector.png" alt="Flowith AI" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-lg" src="partners%20logos/magic_group_linkdn_logo-removebg-preview.png" alt="Magic Group" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-md" src="partners%20logos/ImagineLogo-White.avif" alt="Imagine Art" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-md" src="partners%20logos/6654920a6d9d4790ad4ba7e1_HashMatrix%20Square%20Yellow%20Transparent.svg" alt="HashMatrix" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-film" src="partners%20logos/1682566066filmora-logo-png.png" alt="Filmora" /><span class="marq-dot"></span>
+      <img class="marq-logo" src="partners%20logos/cropped-site-logo.png" alt="Katlas Media" /><span class="marq-dot"></span>
+      <img class="marq-logo" src="partners%20logos/14c9e8f8e6c14b4d3109d0878f0cf5e6.png" alt="KlingAI" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-lg" src="partners%20logos/download-removebg-preview.png" alt="Vidu" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-lg" src="partners%20logos/ChatGPT_Image_May_21__2026__03_56_17_PM-removebg-preview.png" alt="Immersity" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-lg" src="partners%20logos/images-removebg-preview.png" alt="Vivago" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-lg" src="partners%20logos/30a1d24fd744ae005b840bc3ef9426ed_fgraphic-removebg-preview.png" alt="Mureka" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-md" src="partners%20logos/full-iv-black.svg" alt="Invidio" /><span class="marq-dot"></span>
+      <span class="marq-wordmark"><img src="partners%20logos/icon-192.png" alt="THANKYOU" /><span>THANKYOU.</span></span><span class="marq-dot"></span>
+      <!-- duplicate for seamless loop -->
+      <img class="marq-logo" src="partners%20logos/Full%20white%20logo.png" alt="Quantum Machines" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-lg" src="partners%20logos/Flowith-Ai-Logo-PNG-SVG-Vector.png" alt="Flowith AI" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-lg" src="partners%20logos/magic_group_linkdn_logo-removebg-preview.png" alt="Magic Group" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-md" src="partners%20logos/ImagineLogo-White.avif" alt="Imagine Art" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-md" src="partners%20logos/6654920a6d9d4790ad4ba7e1_HashMatrix%20Square%20Yellow%20Transparent.svg" alt="HashMatrix" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-film" src="partners%20logos/1682566066filmora-logo-png.png" alt="Filmora" /><span class="marq-dot"></span>
+      <img class="marq-logo" src="partners%20logos/cropped-site-logo.png" alt="Katlas Media" /><span class="marq-dot"></span>
+      <img class="marq-logo" src="partners%20logos/14c9e8f8e6c14b4d3109d0878f0cf5e6.png" alt="KlingAI" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-lg" src="partners%20logos/download-removebg-preview.png" alt="Vidu" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-lg" src="partners%20logos/ChatGPT_Image_May_21__2026__03_56_17_PM-removebg-preview.png" alt="Immersity" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-lg" src="partners%20logos/images-removebg-preview.png" alt="Vivago" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-lg" src="partners%20logos/30a1d24fd744ae005b840bc3ef9426ed_fgraphic-removebg-preview.png" alt="Mureka" /><span class="marq-dot"></span>
+      <img class="marq-logo marq-logo-md" src="partners%20logos/full-iv-black.svg" alt="Invidio" /><span class="marq-dot"></span>
+      <span class="marq-wordmark"><img src="partners%20logos/icon-192.png" alt="THANKYOU" /><span>THANKYOU.</span></span><span class="marq-dot"></span>
+    </div>
   </div>
 </div>
 
@@ -680,7 +713,7 @@
       </div>
       <div class="col-span-12 md:col-span-4 md:col-start-9 reveal d1">
         <p class="text-dim text-[15px] leading-[1.6]">
-          A working archive — commissions, concepts, and the experiments that
+          A working archive: commissions, concepts, and the experiments that
           earned their way out of the studio.
         </p>
       </div>
@@ -688,13 +721,12 @@
 
     <!-- Filter -->
     <div class="reveal flex flex-wrap items-center gap-2 mb-10">
-      <button class="filter is-active">All <span class="count">07</span></button>
-      <button class="filter">Entertainment <span class="count">02</span></button>
-      <button class="filter">Brand <span class="count">02</span></button>
-      <button class="filter">Social <span class="count">01</span></button>
-      <button class="filter">Concepts <span class="count">01</span></button>
-      <button class="filter">Corporate <span class="count">01</span></button>
+      <button class="filter is-active" data-tab="default">Default <span class="count">07</span></button>
+      <button class="filter" data-tab="concepts">Concepts</button>
+      <button class="filter" data-tab="directed">Directed</button>
     </div>
+
+    <div data-panel="default">
 
     <!-- Grid -->
     <div class="grid grid-cols-12 gap-5">
@@ -822,14 +854,258 @@
 
     <div class="mt-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
       <p class="text-dim text-[14px] max-w-md">
-        Five more pieces in the full archive — including private commissions and unreleased experiments.
+        Five more pieces in the full archive, including private commissions and unreleased experiments.
       </p>
       <a href="#" class="btn btn-ghost">
         <span>Browse full archive</span>
         <span class="arr">→</span>
       </a>
     </div>
+  </div><!-- /panel:default -->
+
+  <!-- Panel: Concepts -->
+  <div data-panel="concepts" style="display:none;">
+    <div class="grid grid-cols-12 gap-5 items-start">
+
+      <a href="work/bugatti/index.html" class="project col-span-12 md:col-span-6">
+        <div class="thumb" style="aspect-ratio:2048/1080">
+          <video src="work/bugatti/commercial.mp4" autoplay muted loop playsinline></video>
+          <span class="thumb-tag">Commercial · AI · 2025</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">Bugatti</h3>
+            <p class="text-dim text-[14px] mt-1">A high-energy AI commercial built for realism. No gimmicks, just performance.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">01</span>
+        </div>
+      </a>
+
+      <a href="work/LINQ/index.html" class="project col-span-12 md:col-span-6">
+        <div class="thumb" style="aspect-ratio:2/1">
+          <video id="linq-vid" src="work/LINQ/10.%20LINQ%20-%20Logo%20Animation.mp4" autoplay muted playsinline></video>
+          <span class="thumb-tag">Concept · SaaS · 2025</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">LINQ</h3>
+            <p class="text-dim text-[14px] mt-1">A full brand identity for a conceptual AI automation platform.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">02</span>
+        </div>
+      </a>
+
+      <a href="work/Glasses/index.html" class="project col-span-12 md:col-span-4">
+        <div class="thumb" style="aspect-ratio:9/16">
+          <video src="work/Glasses/glasses%20commercial.mp4" autoplay muted loop playsinline></video>
+          <span class="thumb-tag">Commercial · 2025</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">Glasses</h3>
+            <p class="text-dim text-[14px] mt-1">A studio commercial — precise lighting, refined presence.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">03</span>
+        </div>
+      </a>
+
+      <a href="work/Tiffany/index.html" class="project col-span-12 md:col-span-4">
+        <div class="thumb" style="aspect-ratio:2/3">
+          <video src="work/Tiffany/1224(9).mp4" autoplay muted loop playsinline></video>
+          <span class="thumb-tag">Commercial · 2025</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">Tiffany &amp; Co.</h3>
+            <p class="text-dim text-[14px] mt-1">A coastal commercial for Tiffany &amp; Co. — serene, luminous, unhurried.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">04</span>
+        </div>
+      </a>
+
+      <a href="work/Pelago/index.html" class="project col-span-12 md:col-span-4">
+        <div class="thumb" style="aspect-ratio:9/16">
+          <video src="work/Pelago/top%20pelago%20commercial.mp4" autoplay muted loop playsinline></video>
+          <span class="thumb-tag">Brand Identity · 2025</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">Pelago</h3>
+            <p class="text-dim text-[14px] mt-1">A coastal clothing brand built from scratch — logo, clothes, packaging, and a full campaign.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">05</span>
+        </div>
+      </a>
+
+      <a href="work/blue the chanel/index.html" class="project col-span-12 md:col-span-8">
+        <div class="thumb" style="aspect-ratio:4/3">
+          <video src="work/blue the chanel/freepik_video-upscale_2859215733%20(1).mp4" autoplay muted loop playsinline></video>
+          <span class="thumb-tag">Commercial · 2025</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">Blue the Chanel</h3>
+            <p class="text-dim text-[14px] mt-1">A seamless, elegant commercial for a well-known premium brand.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">06</span>
+        </div>
+      </a>
+
+      <a href="work/Favorite%20Images/index.html" class="project col-span-12 md:col-span-4">
+        <div class="thumb fav-slideshow" style="aspect-ratio:3/4;">
+          <img class="fav-slide active" src="work/Favorite%20Images/httpss.mj.runPxpDdWfCty0_aesthetic_minimalist_skincare_model__75c0aaae-20a7-4d27-8817-1db055489a24_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/Poster-style_lithographic_artwork._superman_by_henry_cavill_i_5e404825-8847-4dba-92d7-67b536e8d844_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/ArchiDaily_magazine_award-winning_photography_luxury_parametr_0b24502b-b757-4cda-bc93-bcca2ed54063_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/Surreal_ink_fusion_art_hyper-realistic_4K_quality._A_space_sh_0aa32cb6-71bd-498f-8902-43ccde93bc90_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/Ultra-realistic_close-up_of_a_majestic_white_leopard_in_a_des_5b140388-4e46-4b3d-ae95-ae04f8b9c34b_2.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/Minimalist_clean_lines_mountains_and_houses_calm_lake_water_d_c4c2643d-44b7-4925-a3bb-efef390e1a5e_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/Poster-style_lithographic_artwork._black_panther_in_full_armo_8663bd12-cc0f-4ecf-86ab-b618b4efc26f_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/Hyper-realistic_ultra-cinematic_vertical_portrait_of_a_custom_b9a9fb51-0cfe-4924-8722-1a4b2d57b00a_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/httpss.mj.rungRFT4kKTJTw_A_Russian_model_with_clear_skin_hold_116de70f-fda8-45f6-9587-5a6c69213757_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/the_complixations_of_humanity_in_the_digital_age_perplexity.c_62663339-aebd-430a-8ef7-3a374c292bd4_2.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/Ultra-realistic_cinematic_scene._white_chalk_drawing_with_a_g_d8d0a862-9ed0-4742-8edd-b52b6a67eabf_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/Surreal_photographywuxia_in_the_style_of_Moebius_minimalism_f_7f81471d-2dc4-4f3a-b385-03c8d6c46dcb_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/Minimal_scenery_dynamic_geometric_patterns_retro_--chaos_20_-_3752ddeb-5c5c-4d8d-8164-7a57a8b20936_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/In_the_distance_there_is_an_old_house_on_top_of_grassy_hill_o_e7a25d93-8b6d-418e-beda-88cc199e603a_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/2_color_minimal_wallpaper_illustration_sharp_contrast._japan__df1fae1a-def5-432f-a1c7-ed7aa749a5b8_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/minimalist_vector_art_strong_color_pagani_--ar_916_--raw_--sr_d43c027f-e44a-4d15-8847-7ae169b05bb7_0.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/magnific_9Rq7FJyNYZ.png" alt="" />
+          <img class="fav-slide" src="work/Favorite%20Images/magnific_PiFUbC942C.png" alt="" />
+          <span class="thumb-tag">AI Images · Personal · 2025</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">Favorites</h3>
+            <p class="text-dim text-[14px] mt-1">A personal collection of AI stills — no brief, no campaign, just the frames worth keeping.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">07</span>
+        </div>
+      </a>
+
+    </div>
   </div>
+
+  <!-- Panel: Directed -->
+  <div data-panel="directed" style="display:none;">
+    <div class="grid grid-cols-12 gap-5">
+
+      <a href="work/QM%20AQC25%20%26%20APS26/index.html" class="project col-span-12 md:col-span-7">
+        <div class="thumb" style="aspect-ratio:unset;">
+          <video src="work/QM%20AQC25%20%26%20APS26/0306(15).mp4" autoplay muted loop playsinline></video>
+          <span class="thumb-tag">Campaign · 2025–2026</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">Quantum Machines</h3>
+            <p class="text-dim text-[14px] mt-1">Conference campaign across AQC25 and APS26.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">01</span>
+        </div>
+      </a>
+
+      <a href="work/R.T.M%20Digital%20Art/index.html" class="project col-span-12 md:col-span-5">
+        <div class="thumb" style="aspect-ratio:unset;">
+          <img src="work/R.T.M%20Digital%20Art/IMG_0355%20(1).PNG" alt="R.T.M Digital Art" style="object-fit:unset; height:auto;">
+          <span class="thumb-tag">AI Art · 2023</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">R.T.M Digital Art</h3>
+            <p class="text-dim text-[14px] mt-1">A superhero-themed AI art page — 141K followers, worldwide virality, industry partnerships.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">02</span>
+        </div>
+      </a>
+
+      <a href="work/The%20Magic%20Group%20-%20Julius%20Deinius/index.html" class="project col-span-12 md:col-span-7">
+        <div class="thumb" style="aspect-ratio:unset;">
+          <img src="work/The%20Magic%20Group%20-%20Julius%20Deinius/profile-page.png" alt="The Magic Group" style="object-fit:unset; height:auto;">
+          <span class="thumb-tag">Content Creation · 2025</span>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">The Magic Group</h3>
+            <p class="text-dim text-[14px] mt-1">Full-time viral content creator for Julius Deinius — 300M+ views in 5 months.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">03</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  </div>
+  <script>
+  (function(){
+    var btns = document.querySelectorAll('#work [data-tab]');
+    var panels = document.querySelectorAll('#work [data-panel]');
+
+    function switchTab(tab) {
+      btns.forEach(function(b){ b.classList.remove('is-active'); });
+      var activeBtn = document.querySelector('#work [data-tab="' + tab + '"]');
+      if (activeBtn) activeBtn.classList.add('is-active');
+      panels.forEach(function(p){
+        p.style.display = p.getAttribute('data-panel') === tab ? '' : 'none';
+      });
+    }
+
+    btns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        switchTab(btn.getAttribute('data-tab'));
+      });
+    });
+
+    // Save scroll position + active tab before navigating into a project page
+    document.querySelectorAll('.project').forEach(function(link){
+      link.addEventListener('click', function(){
+        var activeBtn = document.querySelector('#work [data-tab].is-active');
+        sessionStorage.setItem('workReturn', JSON.stringify({
+          tab: activeBtn ? activeBtn.getAttribute('data-tab') : 'default',
+          scrollY: window.scrollY
+        }));
+      });
+    });
+
+    // Restore tab + scroll position when returning from a project page
+    var saved = sessionStorage.getItem('workReturn');
+    if (saved) {
+      sessionStorage.removeItem('workReturn');
+      var state = JSON.parse(saved);
+      switchTab(state.tab);
+      window.scrollTo(0, state.scrollY);
+    }
+  })();
+  </script>
 </section>
 
 <!-- ====================================================== -->
@@ -848,7 +1124,7 @@
         <div class="col-span-12 md:col-span-6 md:col-start-7 reveal d1 space-y-5 text-[15.5px] leading-[1.6]">
           <p class="text-ink">
             About a third of what you'll see here was never commissioned. It was
-            made because the image didn't exist yet — to pitch a film, to break
+            made because the image didn't exist yet: to pitch a film, to break
             a tool, to prove that a frame could hold.
           </p>
           <p class="text-dim">
@@ -945,7 +1221,7 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3 L12 21"/><path d="M3 12 L21 12"/><circle cx="12" cy="12" r="3.6"/></svg>
         </span>
         <h3 class="text-ink text-[18px] font-medium mb-2 tracking-[-0.02em]">Creative Experiments</h3>
-        <p class="text-dim text-[13.5px] leading-[1.6]">R&amp;D pieces — pipelines, tools, and unreleased films from the studio's lab.</p>
+        <p class="text-dim text-[13.5px] leading-[1.6]">R&amp;D pieces: pipelines, tools, and unreleased films from the studio's lab.</p>
         <div class="mt-auto pt-6 flex items-center justify-between">
           <span class="mono text-[11px] text-mute">17 pieces</span>
           <span class="text-mute text-[16px]">→</span>
@@ -980,14 +1256,14 @@
       <div class="space-y-5 text-[15.5px] leading-[1.65]">
         <p class="text-ink">
           Roei Lustig is an AI content creator and visual storyteller based
-          between Tel Aviv and Berlin. The studio directs short films, brand
+          in Tel Aviv. The studio directs short films, brand
           work, and concept pieces using generative tools as a camera, a
           crew, and a darkroom.
         </p>
         <p class="text-dim">
           He came up in live‑action direction in 2017, then turned fully
           toward generative workflows in late 2022. The studio treats every
-          frame like a frame — composed, color‑graded, and earned.
+          frame like a frame: composed, color‑graded, and earned.
         </p>
         <p class="text-dim">
           Past collaborators include luxury houses, independent musicians,
@@ -999,15 +1275,15 @@
       <div class="mt-10 grid grid-cols-2 gap-y-6 gap-x-8 pt-8 border-t border-border">
         <div>
           <div class="eyebrow mb-1.5">Based</div>
-          <div class="text-ink text-[15px]">Tel Aviv → Berlin</div>
+          <div class="text-ink text-[15px]">Tel Aviv</div>
         </div>
         <div>
           <div class="eyebrow mb-1.5">Active since</div>
-          <div class="text-ink text-[15px]">2017</div>
+          <div class="text-ink text-[15px]">2023</div>
         </div>
         <div>
           <div class="eyebrow mb-1.5">Languages</div>
-          <div class="text-ink text-[15px]">EN · HE · DE</div>
+          <div class="text-ink text-[15px]">EN · HE</div>
         </div>
         <div>
           <div class="eyebrow mb-1.5">Representation</div>
@@ -1030,8 +1306,8 @@
         <h2 class="h-display text-ink text-[clamp(36px,4.6vw,60px)] max-w-[14ch]">What the studio does.</h2>
       </div>
       <p class="reveal d1 col-span-12 md:col-span-4 md:col-start-9 text-dim text-[14.5px] leading-[1.6]">
-        Six engagement models. Each scoped tightly. Send a brief — replies
-        within 48 hours.
+        Six engagement models. Each scoped tightly. Send a brief, remote-first,
+        available worldwide.
       </p>
     </div>
 
@@ -1043,7 +1319,7 @@
           <span class="arrr text-[18px]">↗</span>
         </div>
         <h3 class="text-ink text-[20px] font-medium tracking-[-0.025em]">AI Direction</h3>
-        <p class="text-dim text-[14px] leading-[1.6]">End‑to‑end generative direction. Treatment, boards, shoot, post — all under one roof.</p>
+        <p class="text-dim text-[14px] leading-[1.6]">End‑to‑end generative direction. Treatment, boards, shoot, post. All under one roof.</p>
         <div class="mt-auto pt-4 mono text-[11px] text-mute">Treatment · Boards · Shoot · Post</div>
       </a>
 
@@ -1093,7 +1369,7 @@
           <span class="arrr text-[18px]">↗</span>
         </div>
         <h3 class="text-ink text-[20px] font-medium tracking-[-0.025em]">Creative Consulting</h3>
-        <p class="text-dim text-[14px] leading-[1.6]">Embedded sprints with in‑house teams — pipeline, prompt craft, taste calibration.</p>
+        <p class="text-dim text-[14px] leading-[1.6]">Embedded sprints with in‑house teams: pipeline, prompt craft, taste calibration.</p>
         <div class="mt-auto pt-4 mono text-[11px] text-mute">Workshops · Pipelines</div>
       </a>
 
@@ -1113,7 +1389,7 @@
           Have a film in mind?
         </h2>
         <p class="mt-5 text-dim text-[16px] max-w-[520px] leading-[1.6]">
-          Briefs reviewed within 48 hours. Currently accepting Q3 — Q4 2026 commissions.
+          Remote-first, available worldwide. Currently accepting Q3 — Q4 2026 commissions.
         </p>
       </div>
 
@@ -1236,6 +1512,34 @@
       btn.classList.add('is-active');
     });
   });
+
+  // Favorites slideshow
+  (function(){
+    const slides = document.querySelectorAll('.fav-slideshow .fav-slide');
+    if (!slides.length) return;
+    let idx = 0;
+    setInterval(() => {
+      slides[idx].classList.remove('active');
+      idx = (idx + 1) % slides.length;
+      slides[idx].classList.add('active');
+    }, 1500);
+  })();
+
+  // LINQ video sequence: logo animation → website demo, looping
+  (function(){
+    const vid = document.getElementById('linq-vid');
+    if (!vid) return;
+    const sources = [
+      'work/LINQ/10.%20LINQ%20-%20Logo%20Animation.mp4',
+      'work/LINQ/1.%20LINQ%20-%20Website%20Demo_.mp4'
+    ];
+    let idx = 0;
+    vid.addEventListener('ended', () => {
+      idx = (idx + 1) % sources.length;
+      vid.src = sources[idx];
+      vid.play();
+    });
+  })();
 </script>
 
 </body>
