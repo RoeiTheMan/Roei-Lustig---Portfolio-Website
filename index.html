@@ -1569,9 +1569,23 @@
       const v = document.getElementById(id);
       if (!v) return;
       v.removeAttribute('loop');              // cycler manages the sequence
-      let i = 0;
-      v.addEventListener('ended', () => {     // swap to next clip, only now load it
+      let i = 0, prefetched = -1;
+      // Once the current clip is well underway, quietly warm the NEXT one into
+      // cache (detached element, never shown/played) so the swap is seamless —
+      // without eager-loading every clip up front.
+      v.addEventListener('timeupdate', () => {
+        if (!v.duration || !isFinite(v.duration)) return;
+        if (v.currentTime / v.duration < 0.7) return;
+        const next = (i + 1) % sources.length;
+        if (prefetched === next) return;
+        prefetched = next;
+        const pf = document.createElement('video');
+        pf.muted = true; pf.preload = 'auto'; pf.src = sources[next]; pf.load();
+        v._pf = pf;                           // hold a ref so the fetch isn't GC'd
+      });
+      v.addEventListener('ended', () => {     // swap to the (now cached) next clip
         i = (i + 1) % sources.length;
+        prefetched = -1;
         v.src = sources[i];
         v.load();
         v.play().catch(() => {});
@@ -1604,6 +1618,24 @@
     }, { threshold: 0.2, rootMargin: '150px 0px' });
 
     vids.forEach(v => io.observe(v));
+
+    // Self-heal: a visible preview that's stuck (paused, or a frame that isn't
+    // advancing) gets a gentle nudge back into playback. Covers buffering stalls,
+    // phone decode-limit hiccups, and play()/pause() races. Off-screen videos and
+    // hidden-tab videos are left alone (handled by the observer / their panel).
+    const lastT = new WeakMap();
+    setInterval(() => {
+      vids.forEach(v => {
+        if (v.offsetParent === null) return;            // hidden (inactive tab) — skip
+        const r = v.getBoundingClientRect();
+        const mid = r.top + r.height / 2;
+        if (!(mid > 0 && mid < window.innerHeight)) return; // not centred in view — skip
+        const prev = lastT.get(v);
+        const stuck = v.paused || (prev !== undefined && Math.abs(v.currentTime - prev) < 0.01);
+        if (stuck) { const p = v.play(); if (p && p.catch) p.catch(() => {}); }
+        lastT.set(v, v.currentTime);
+      });
+    }, 1200);
   })();
 </script>
 
