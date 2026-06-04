@@ -1,3 +1,5 @@
 ﻿node_modules/
 temporary screenshots/
 *.mp4
+
+.worktrees/
