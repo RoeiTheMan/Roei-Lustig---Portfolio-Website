@@ -834,7 +834,7 @@
 
       <a href="work/bugatti/" class="project col-span-12 md:col-span-6">
         <div style="position:relative; overflow:hidden; border-radius:14px; border:1px solid var(--border);">
-          <video src="https://videos.roeilustig.com/0322.mp4" autoplay muted loop playsinline style="width:100%; height:auto; display:block;"></video>
+          <video src="https://videos.roeilustig.com/0322.mp4" muted loop playsinline preload="none" poster="https://videos.roeilustig.com/0322.jpg" style="width:100%; height:auto; display:block;"></video>
           <span class="thumb-tag">Commercial · 2026</span>
           <div class="card-includes">
             <span class="card-inc-label">Includes</span>
@@ -856,7 +856,7 @@
 
       <a href="work/LINQ/" class="project col-span-12 md:col-span-6">
         <div class="thumb" style="aspect-ratio:2/1">
-          <video id="linq-vid" src="https://videos.roeilustig.com/10.%20LINQ%20-%20Logo%20Animation.mp4" autoplay muted playsinline></video>
+          <video id="linq-vid" src="https://videos.roeilustig.com/10.%20LINQ%20-%20Logo%20Animation.mp4" muted playsinline preload="none" poster="https://videos.roeilustig.com/10.%20LINQ%20-%20Logo%20Animation.jpg"></video>
           <span class="thumb-tag">Full Brand · 2026</span>
           <div class="card-includes">
             <span class="card-inc-label">Includes</span>
@@ -882,7 +882,7 @@
 
       <a href="work/Glasses/" class="project col-span-12 md:col-span-4">
         <div class="thumb" style="aspect-ratio:9/16">
-          <video src="https://videos.roeilustig.com/glasses%20commercial.mp4" autoplay muted loop playsinline></video>
+          <video src="https://videos.roeilustig.com/glasses%20commercial.mp4" muted loop playsinline preload="none" poster="https://videos.roeilustig.com/glasses%20commercial.jpg"></video>
           <span class="thumb-tag">Commercial · 2025</span>
           <div class="card-includes">
             <span class="card-inc-label">Includes</span>
@@ -904,7 +904,7 @@
 
       <a href="work/Tiffany/" class="project col-span-12 md:col-span-4">
         <div class="thumb" style="aspect-ratio:2/3">
-          <video src="https://videos.roeilustig.com/1224(9).mp4" autoplay muted loop playsinline></video>
+          <video src="https://videos.roeilustig.com/1224(9).mp4" muted loop playsinline preload="none" poster="https://videos.roeilustig.com/1224(9).jpg"></video>
           <span class="thumb-tag">Commercial · 2025</span>
           <div class="card-includes">
             <span class="card-inc-label">Includes</span>
@@ -926,7 +926,7 @@
 
       <a href="work/Pelago/" class="project col-span-12 md:col-span-4">
         <div class="thumb" style="aspect-ratio:9/16">
-          <video id="pelago-vid" src="https://videos.roeilustig.com/top%20pelago%20commercial.mp4" autoplay muted playsinline></video>
+          <video id="pelago-vid" src="https://videos.roeilustig.com/top%20pelago%20commercial.mp4" muted playsinline preload="none" poster="https://videos.roeilustig.com/top%20pelago%20commercial.jpg"></video>
           <span class="thumb-tag">Full Brand · 2026</span>
           <div class="card-includes" style="max-width:200px; row-gap:4px;">
             <span class="card-inc-label">Includes</span>
@@ -950,7 +950,7 @@
 
       <a href="work/blue%20the%20chanel/" class="project col-span-12 md:col-span-8">
         <div class="thumb" style="aspect-ratio:4/3">
-          <video src="https://videos.roeilustig.com/freepik_video-upscale_2859215733%20(1).mp4" autoplay muted loop playsinline></video>
+          <video src="https://videos.roeilustig.com/freepik_video-upscale_2859215733%20(1).mp4" muted loop playsinline preload="none" poster="https://videos.roeilustig.com/freepik_video-upscale_2859215733%20(1).jpg"></video>
           <span class="thumb-tag">Commercial · 2026</span>
           <div class="card-includes">
             <span class="card-inc-label">Includes</span>
@@ -1005,7 +1005,7 @@
 
       <a href="work/Action%20Scenes/" class="project col-span-12 md:col-span-8 md:col-start-3">
         <div style="position:relative; overflow:hidden; border-radius:14px; border:1px solid var(--border); aspect-ratio:16/9;">
-          <video id="action-vid" src="https://videos.roeilustig.com/video-50ef3414.mp4" autoplay muted playsinline style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
+          <video id="action-vid" src="https://videos.roeilustig.com/video-50ef3414.mp4" muted playsinline preload="none" poster="https://videos.roeilustig.com/video-50ef3414.jpg" style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
           <span class="thumb-tag">Movie Production · 2026</span>
           <div class="card-includes">
             <span class="card-inc-label">Includes</span>
@@ -1085,8 +1085,8 @@
       </a>
 
       <a href="work/QM%20AQC25%20%26%20APS26/" class="project col-span-12 md:col-span-10 md:col-start-2">
-        <div class="thumb" style="aspect-ratio:unset;">
-          <video src="https://videos.roeilustig.com/0306(15).mp4" autoplay muted loop playsinline></video>
+        <div class="thumb" style="aspect-ratio:1114/720;">
+          <video src="https://videos.roeilustig.com/0306(15).mp4" muted loop playsinline preload="none" poster="https://videos.roeilustig.com/0306(15).jpg" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
           <span class="thumb-tag">Client Work · 2025–2026</span>
           <div class="card-includes">
             <span class="card-inc-label">Includes</span>
@@ -1528,91 +1528,67 @@
     }, 1500);
   })();
 
-  // LINQ video sequence: logo animation → website demo, looping
+  // ---- Lazy, decode-safe video previews ----
+  // Markup sets preload="none" + poster. Videos load & play ONLY while in view and
+  // pause when they leave (iOS caps simultaneous decodes; this also stops 8+ heavy
+  // files loading at once on page load). Cyclers swap source on 'ended' using a
+  // SINGLE element — no second decoder, no eager pre-load of the next clip.
   (function(){
-    const vid = document.getElementById('linq-vid');
-    if (!vid) return;
-    const sources = [
-      'https://videos.roeilustig.com/10.%20LINQ%20-%20Logo%20Animation.mp4',
-      'https://videos.roeilustig.com/1.%20LINQ%20-%20Website%20Demo_.mp4'
-    ];
-    let idx = 0;
-    vid.addEventListener('ended', () => {
-      idx = (idx + 1) % sources.length;
-      vid.src = sources[idx];
-      vid.play();
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // id -> ordered sources. One element per cycler; advance on 'ended'.
+    const CYCLERS = {
+      'linq-vid': [
+        'https://videos.roeilustig.com/10.%20LINQ%20-%20Logo%20Animation.mp4',
+        'https://videos.roeilustig.com/1.%20LINQ%20-%20Website%20Demo_.mp4'
+      ],
+      'pelago-vid': [
+        'https://videos.roeilustig.com/top%20pelago%20commercial.mp4',
+        'https://videos.roeilustig.com/magnific_video-upscale_2897296438%20(1).mp4',
+        'https://videos.roeilustig.com/magnific_video-upscale_43QVmwV9Aa.mp4'
+      ],
+      'action-vid': [
+        'https://videos.roeilustig.com/video-50ef3414.mp4',
+        'https://videos.roeilustig.com/0602.mp4',
+        'https://videos.roeilustig.com/output-03614f78d1b64e038eba9cbeafeab362.mp4'
+      ]
+    };
+
+    Object.entries(CYCLERS).forEach(([id, sources]) => {
+      const v = document.getElementById(id);
+      if (!v) return;
+      v.removeAttribute('loop');              // cycler manages the sequence
+      let i = 0;
+      v.addEventListener('ended', () => {     // swap to next clip, only now load it
+        i = (i + 1) % sources.length;
+        v.src = sources[i];
+        v.load();
+        v.play().catch(() => {});
+      });
     });
+
+    // Guarantee preload="none" even if a tag missed it.
+    const vids = Array.from(document.querySelectorAll('video'));
+    vids.forEach(v => { if (v.getAttribute('preload') !== 'none') v.setAttribute('preload', 'none'); });
+
+    if (reduce) return; // reduced-motion: keep posters, never autoplay
+
+    // Reliable, gesture-free play trigger (muted + playsinline). Replaces the old
+    // readyState>=2 gate that cold mobile files rarely satisfied.
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        const v = e.target;
+        if (e.isIntersecting) {
+          const p = v.play();
+          if (p && p.catch) p.catch(() => {});
+        } else if (!v.paused) {
+          v.pause();                          // free the decoder when off-screen
+        }
+      });
+    }, { threshold: 0.2, rootMargin: '150px 0px' });
+
+    vids.forEach(v => io.observe(v));
   })();
-
-  // Smooth crossfade video cycling — polls cur.ended so off-screen videos still progress
-  function setupVideoCycler(vidId, sources) {
-    const mainVid = document.getElementById(vidId);
-    if (!mainVid) return;
-    const parent = mainVid.parentElement;
-
-    mainVid.removeAttribute('autoplay');
-
-    mainVid.style.position = 'absolute';
-    mainVid.style.top = '0'; mainVid.style.left = '0';
-    mainVid.style.width = '100%'; mainVid.style.height = '100%';
-    mainVid.style.objectFit = 'cover';
-    mainVid.style.opacity = '1';
-    mainVid.style.zIndex = '0';
-    mainVid.style.transition = 'opacity 0.6s ease, filter 0.6s ease';
-
-    const altVid = document.createElement('video');
-    altVid.muted = true;
-    altVid.setAttribute('playsinline', '');
-    altVid.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;z-index:0;transition:opacity 0.6s ease, filter 0.6s ease;filter:saturate(0.85) contrast(1.02) brightness(0.92)';
-    parent.appendChild(altVid);
-
-    let srcIdx = 0;
-    let cur = mainVid, nxt = altVid;
-    let transitioning = false;
-
-    nxt.src = sources[1 % sources.length];
-    nxt.load();
-
-    function doTransition() {
-      if (transitioning) return;
-      transitioning = true;
-      srcIdx = (srcIdx + 1) % sources.length;
-      const afterNext = (srcIdx + 1) % sources.length;
-      nxt.style.zIndex = '1';
-      cur.style.zIndex = '0';
-      nxt.currentTime = 0;
-      nxt.play().catch(() => {});
-      nxt.style.opacity = '1';
-      cur.style.opacity = '0';
-      [cur, nxt] = [nxt, cur];
-      setTimeout(() => {
-        nxt.pause();
-        nxt.src = sources[afterNext];
-        nxt.load();
-        transitioning = false;
-      }, 800);
-    }
-
-    setInterval(() => {
-      if (!transitioning && cur.ended) {
-        doTransition();
-      } else if (!transitioning && cur.paused && !cur.ended && cur.readyState >= 2) {
-        cur.play().catch(() => {});
-      }
-    }, 200);
-  }
-
-  setupVideoCycler('pelago-vid', [
-    'https://videos.roeilustig.com/top%20pelago%20commercial.mp4',
-    'https://videos.roeilustig.com/magnific_video-upscale_2897296438%20(1).mp4',
-    'https://videos.roeilustig.com/magnific_video-upscale_43QVmwV9Aa.mp4'
-  ]);
-
-  setupVideoCycler('action-vid', [
-    'https://videos.roeilustig.com/video-50ef3414.mp4',
-    'https://videos.roeilustig.com/0602.mp4',
-    'https://videos.roeilustig.com/output-03614f78d1b64e038eba9cbeafeab362.mp4'
-  ]);
 </script>
 
 </body>

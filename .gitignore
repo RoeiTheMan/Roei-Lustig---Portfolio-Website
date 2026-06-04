@@ -3,3 +3,8 @@ temporary screenshots/
 *.mp4
 
 .worktrees/
+
+# Optimized video previews + posters live on Cloudflare R2, not in the Pages repo
+previews-optimized/
+# Throwaway QA comparison frames
+qa-compare/
