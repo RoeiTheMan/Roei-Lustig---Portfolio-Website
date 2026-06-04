@@ -1,4 +1,4 @@
-import http from "node:http";
+﻿import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -33,11 +33,6 @@ const MIME = {
   ".map":  "application/json; charset=utf-8"
 };
 
-function send(res, status, body, headers = {}) {
-  res.writeHead(status, { "Cache-Control": "no-store", ...headers });
-  res.end(body);
-}
-
 const server = http.createServer((req, res) => {
   try {
     const urlPath = decodeURIComponent(req.url.split("?")[0]);
@@ -45,21 +40,54 @@ const server = http.createServer((req, res) => {
     let filePath = path.join(ROOT, safePath);
 
     if (!filePath.startsWith(ROOT)) {
-      return send(res, 403, "Forbidden");
+      res.writeHead(403); res.end("Forbidden"); return;
     }
 
     fs.stat(filePath, (err, stat) => {
-      if (err) return send(res, 404, "Not found");
+      if (err) { res.writeHead(404); res.end("Not found"); return; }
+
       if (stat.isDirectory()) filePath = path.join(filePath, "index.html");
 
-      fs.readFile(filePath, (err2, data) => {
-        if (err2) return send(res, 404, "Not found");
-        const type = MIME[path.extname(filePath).toLowerCase()] || "application/octet-stream";
-        send(res, 200, data, { "Content-Type": type });
+      fs.stat(filePath, (err2, fileStat) => {
+        if (err2) { res.writeHead(404); res.end("Not found"); return; }
+
+        const ext  = path.extname(filePath).toLowerCase();
+        const type = MIME[ext] || "application/octet-stream";
+        const size = fileStat.size;
+        const rangeHeader = req.headers["range"];
+
+        if (rangeHeader) {
+          const match = rangeHeader.match(/bytes=(\d*)-(\d*)/);
+          if (match) {
+            const start = match[1] !== "" ? parseInt(match[1], 10) : 0;
+            const end   = match[2] !== "" ? parseInt(match[2], 10) : size - 1;
+            if (start > end || end >= size) {
+              res.writeHead(416, { "Content-Range": `bytes */${size}` });
+              res.end(); return;
+            }
+            res.writeHead(206, {
+              "Content-Type":   type,
+              "Content-Range":  `bytes ${start}-${end}/${size}`,
+              "Content-Length": end - start + 1,
+              "Accept-Ranges":  "bytes",
+              "Cache-Control":  "no-store",
+            });
+            fs.createReadStream(filePath, { start, end }).pipe(res);
+            return;
+          }
+        }
+
+        res.writeHead(200, {
+          "Content-Type":   type,
+          "Content-Length": size,
+          "Accept-Ranges":  "bytes",
+          "Cache-Control":  "no-store",
+        });
+        fs.createReadStream(filePath).pipe(res);
       });
     });
   } catch {
-    send(res, 500, "Server error");
+    res.writeHead(500); res.end("Server error");
   }
 });
 

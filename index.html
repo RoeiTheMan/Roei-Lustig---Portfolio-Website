@@ -220,6 +220,15 @@
     70% { box-shadow:0 0 0 8px rgba(255,106,61,0); }
     100%{ box-shadow:0 0 0 0 rgba(255,106,61,0); }
   }
+  .live-hours{
+    color:var(--coral);
+    animation:hourspulse 1.4s ease-in-out infinite;
+  }
+  @keyframes hourspulse{
+    0%  { text-shadow:0 0 4px rgba(255,106,61,1), 0 0 12px rgba(255,106,61,0.7); }
+    50% { text-shadow:0 0 2px rgba(255,106,61,0.3), 0 0 0px rgba(255,106,61,0); }
+    100%{ text-shadow:0 0 4px rgba(255,106,61,1), 0 0 12px rgba(255,106,61,0.7); }
+  }
 
   /* ===================== CARD ===================== */
   .card{
@@ -295,6 +304,12 @@
   .project:hover .thumb img{ transform:scale(1.05); filter:saturate(1) contrast(1.05) brightness(1); }
   .project:hover .thumb video{ filter:saturate(1) contrast(1.05) brightness(1); }
   .project:hover .thumb-play{ background:var(--coral); color:#0a0a0c; }
+  .card-includes{ position:absolute; bottom:12px; left:12px; z-index:2; display:inline-flex; align-items:center; flex-wrap:wrap; align-content:center; padding:6px 10px; border-radius:8px; gap:6px; border:1px solid rgba(255,255,255,0.1); background:rgba(10,10,12,0.65); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+  .card-inc-label{ font-family:'Geist Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--mute); }
+  .card-inc-sep{ width:1px; height:10px; background:var(--border); }
+  .card-inc-item{ display:flex; align-items:center; gap:5px; font-size:11px; color:var(--dim); }
+  .card-inc-dot{ width:5px; height:5px; border-radius:50%; background:var(--coral); flex-shrink:0; }
+  .card-inc-count{ font-family:'Geist Mono',monospace; font-size:10px; color:var(--mute); }
   .fav-slide{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transform:scale(1.06); transition:opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 6s ease-out; }
   .fav-slide.active{ opacity:1; transform:scale(1.0); }
 
@@ -382,6 +397,11 @@
     padding:24px;
     position:relative;
     overflow:hidden;
+    transition:transform 0.5s cubic-bezier(0.22,1,0.36,1), border-color 0.4s ease;
+  }
+  .stat-card:hover{
+    border-color:rgba(255,255,255,0.12);
+    transform:translateY(-3px);
   }
   .stat-num{
     font-family:'Geist', sans-serif;
@@ -398,11 +418,16 @@
     overflow:hidden;
     border:1px solid var(--border);
     background:var(--card);
-    aspect-ratio:5/4;
+    aspect-ratio:4/5;
   }
   .hero-media img{
     width:100%; height:100%; object-fit:cover;
     filter:saturate(0.85) contrast(1.04) brightness(0.92);
+    transition:transform 0.6s cubic-bezier(0.22,1,0.36,1), filter 0.6s ease;
+  }
+  .hero-media:hover img{
+    transform:scale(1.04);
+    filter:saturate(1) contrast(1.05) brightness(1);
   }
   .hero-media::after{
     content:''; position:absolute; inset:0;
@@ -478,7 +503,8 @@
     background:var(--card);
     aspect-ratio:4/5;
   }
-  .portrait img{ width:100%; height:100%; object-fit:cover; filter:saturate(0.85) contrast(1.04); }
+  .portrait img{ width:100%; height:100%; object-fit:cover; filter:saturate(0.85) contrast(1.04); transition:transform 0.6s cubic-bezier(0.22,1,0.36,1), filter 0.6s ease; }
+  .portrait:hover img{ transform:scale(1.04); filter:saturate(1) contrast(1.05); }
   .portrait::after{
     content:''; position:absolute; inset:0;
     background:linear-gradient(180deg, rgba(10,10,12,0) 50%, rgba(10,10,12,0.5) 100%);
@@ -512,6 +538,90 @@
 
   /* ===================== UTIL ===================== */
   .ring-coral:focus-visible{ outline:2px solid var(--coral); outline-offset:3px; border-radius:8px; }
+
+  /* ===================== MOBILE NAV (hamburger) ===================== */
+  .nav-toggle{
+    display:none;
+    width:44px; height:44px;
+    align-items:center; justify-content:center;
+    border-radius:999px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,0.02);
+    color:var(--ink);
+    transition:background 0.3s ease, border-color 0.3s ease;
+  }
+  .nav-toggle:hover{ background:rgba(255,255,255,0.05); border-color:rgba(255,255,255,0.18); }
+  .nav-toggle:focus-visible{ outline:2px solid var(--coral); outline-offset:3px; }
+  .nav-toggle .bars{ position:relative; width:18px; height:11px; }
+  .nav-toggle .bars span{
+    position:absolute; left:0; height:1.5px; width:100%;
+    background:currentColor; border-radius:2px;
+    transition:transform 0.35s cubic-bezier(0.22,1,0.36,1), opacity 0.2s ease, top 0.35s ease;
+  }
+  .nav-toggle .bars span:nth-child(1){ top:0; }
+  .nav-toggle .bars span:nth-child(2){ top:5px; }
+  .nav-toggle .bars span:nth-child(3){ top:10px; }
+  body.nav-open .nav-toggle .bars span:nth-child(1){ top:5px; transform:rotate(45deg); }
+  body.nav-open .nav-toggle .bars span:nth-child(2){ opacity:0; }
+  body.nav-open .nav-toggle .bars span:nth-child(3){ top:5px; transform:rotate(-45deg); }
+
+  .mobile-menu{
+    position:fixed; inset:0; z-index:49;
+    display:flex; flex-direction:column;
+    padding:104px 24px 40px;
+    background:rgba(10,10,12,0.94);
+    backdrop-filter:blur(24px) saturate(140%);
+    -webkit-backdrop-filter:blur(24px) saturate(140%);
+    opacity:0; pointer-events:none;
+    transform:translateY(-10px);
+    transition:opacity 0.4s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1);
+  }
+  body.nav-open .mobile-menu{ opacity:1; pointer-events:auto; transform:none; }
+  .m-link{
+    display:flex; align-items:center; justify-content:space-between;
+    min-height:60px; padding:6px 4px;
+    font-family:'Geist', sans-serif;
+    font-size:26px; font-weight:500; letter-spacing:-0.025em;
+    color:var(--ink);
+    border-bottom:1px solid var(--border);
+    transition:color 0.3s ease, padding-left 0.3s ease;
+  }
+  .m-link:hover, .m-link:focus-visible{ color:var(--coral); padding-left:10px; outline:none; }
+  .m-link .m-idx{ font-family:'Geist Mono', monospace; font-size:12px; color:var(--mute); }
+  .m-cta{ margin-top:auto; }
+
+  /* ===================== RESPONSIVE — TABLET (<=768px) ===================== */
+  @media (max-width: 767.98px){
+    .nav-toggle{ display:inline-flex; }
+    .nav-cta{ display:none; }
+    body.nav-open{ overflow:hidden; }
+
+    /* 12-col grids always reserve 11 inter-column gaps; when items stack to
+       full width on mobile that gap becomes horizontal overflow. Zero the
+       column gap (row gap preserved by the shorthand) to kill the overflow. */
+    .grid-cols-12{ column-gap:0 !important; }
+
+    .email-cta{ padding:32px 24px; border-radius:20px; }
+    .filter{ height:42px; padding:0 16px; }
+    .svc-card{ padding:24px; min-height:0; }
+    .cat-card{ padding:22px; min-height:0; }
+    .marq{ padding:18px 0; }
+    .marq-track{ gap:40px; }
+    .marq-logo{ height:34px; }
+    .marq-logo-lg{ height:72px; }
+    #copy-email{ width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center; margin-top:0; }
+  }
+
+  /* ===================== RESPONSIVE — MOBILE (<=480px) ===================== */
+  @media (max-width: 480px){
+    .email-cta{ padding:24px 18px; border-radius:18px; }
+    .m-link{ font-size:22px; min-height:54px; }
+    .marq-track{ gap:32px; }
+    .marq-logo{ height:28px; }
+    .marq-logo-lg{ height:56px; }
+    .marq-wordmark span{ font-size:17px; }
+    .pill{ height:auto; padding:6px 12px; }
+  }
 </style>
 </head>
 
@@ -537,12 +647,29 @@
       <li><a href="#services" class="nav-link">Services</a></li>
       <li><a href="#contact"  class="nav-link">Contact</a></li>
     </ul>
-    <a href="#contact" class="btn btn-ghost h-[36px] !px-4 text-[13px]">
+    <a href="#contact" class="nav-cta btn btn-ghost h-[36px] !px-4 text-[13px]">
       <span>Get in touch</span>
       <span class="arr">→</span>
     </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span class="bars"><span></span><span></span><span></span></span>
+    </button>
   </div>
 </nav>
+
+<!-- ====================================================== -->
+<!-- MOBILE MENU -->
+<!-- ====================================================== -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#work"     class="m-link"><span>Work</span><span class="m-idx">01</span></a>
+  <a href="#about"    class="m-link"><span>About</span><span class="m-idx">02</span></a>
+  <a href="#services" class="m-link"><span>Services</span><span class="m-idx">03</span></a>
+  <a href="#contact"  class="m-link"><span>Contact</span><span class="m-idx">04</span></a>
+  <a href="#contact"  class="m-cta btn btn-accent w-full justify-center mt-10">
+    <span>Get in touch</span>
+    <span class="arr">→</span>
+  </a>
+</div>
 
 <!-- ====================================================== -->
 <!-- HERO -->
@@ -555,11 +682,11 @@
       <div class="reveal">
         <span class="pill mb-8">
           <span class="live-dot"></span>
-          <span>Open for Q3 — Q4 / 2026</span>
+          <span>Currently replies within — <span class="live-hours">48 hours</span></span>
         </span>
       </div>
 
-      <h1 class="reveal d1 h-display-tight text-ink text-[clamp(44px,7vw,92px)] mb-8 max-w-[14ch]">
+      <h1 class="reveal d1 h-display-tight text-ink text-[clamp(32px,7vw,92px)] mb-8 max-w-[14ch]">
         AI films built<br/>
         for the way<br/>
         the world <span class="text-coral">scrolls</span>.
@@ -567,8 +694,8 @@
 
       <p class="reveal d2 text-dim text-[17px] leading-[1.55] max-w-[520px] mb-10">
         Roei Lustig is an AI content creator and visual storyteller working at the
-        edge of generative tools. Short films, brand work, and concept pieces
-        that hold up at frame‑rate one and the algorithm.
+        edge of generative tools. Short films, brand work, and concept pieces.
+        The concepts give full creative freedom to showcase what AI is truly capable of.
       </p>
 
       <div class="reveal d3 flex flex-wrap items-center gap-3">
@@ -581,20 +708,20 @@
         </a>
       </div>
 
-      <div class="reveal d4 mt-14 flex items-center gap-8">
-        <div>
+      <div class="reveal d4 mt-14 flex flex-wrap items-center gap-x-8 gap-y-6">
+        <div class="group cursor-default">
           <div class="eyebrow mb-2">Based</div>
-          <div class="text-[15px] text-ink">Tel Aviv</div>
+          <div class="text-[15px] text-ink transition-colors duration-200 group-hover:text-coral">Tel Aviv</div>
         </div>
         <div class="w-px h-10 bg-border"></div>
-        <div>
+        <div class="group cursor-default">
           <div class="eyebrow mb-2">Available</div>
-          <div class="text-[15px] text-ink">Remote — worldwide</div>
+          <div class="text-[15px] text-ink transition-colors duration-200 group-hover:text-coral">Remote — worldwide</div>
         </div>
         <div class="w-px h-10 bg-border hidden sm:block"></div>
-        <div class="hidden sm:block">
+        <div class="hidden sm:block group cursor-default">
           <div class="eyebrow mb-2">Process</div>
-          <div class="text-[15px] text-ink">Concept → Script → Direct → Deliver</div>
+          <div class="text-[15px] text-ink transition-colors duration-200 group-hover:text-coral">Concept → Script → Direct → Deliver</div>
         </div>
       </div>
     </div>
@@ -603,26 +730,6 @@
     <div class="col-span-12 lg:col-span-5 reveal d2">
       <div class="hero-media">
         <img src="https://picsum.photos/seed/atmosphere-hero/900/720" alt="Featured film — Atmosphere" />
-        <div class="absolute top-4 left-4 z-[2]">
-          <span class="pill !bg-[rgba(10,10,12,0.55)] !backdrop-blur-md">
-            <span class="live-dot"></span>
-            <span>Now Playing — Showreel 2026</span>
-          </span>
-        </div>
-        <div class="hero-meta">
-          <div>
-            <div class="eyebrow eyebrow-coral mb-1">Featured</div>
-            <div class="text-ink text-[18px] font-medium">Atmosphere — Vol. 04</div>
-          </div>
-          <button aria-label="Play showreel" class="thumb-play !relative !right-auto !bottom-auto">
-            <svg width="13" height="14" viewBox="0 0 13 14" fill="currentColor"><path d="M0 0 L13 7 L0 14 Z"/></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- mini bottom stat -->
-      <div class="mt-4 flex items-center gap-3 mono text-[11px] text-mute">
-        <span>02:14</span><span>·</span><span>Dir. R. Lustig</span><span>·</span><span>2026</span>
       </div>
     </div>
   </div>
@@ -661,7 +768,7 @@
 <!-- ====================================================== -->
 <div class="relative z-10 mt-24">
   <div class="max-w-[1280px] mx-auto px-6 mb-8 text-center">
-    <p class="eyebrow tracking-[0.14em]">Brands I've Worked With</p>
+    <p class="eyebrow tracking-[0.14em] transition-colors duration-200 cursor-default hover:text-coral">Brands I've Worked With</p>
   </div>
   <div class="marq">
     <div class="marq-track">
@@ -707,170 +814,33 @@
     <div class="grid grid-cols-12 gap-8 mb-14 items-end">
       <div class="col-span-12 md:col-span-7 reveal">
         <div class="eyebrow mb-4"><span class="eyebrow-coral">02</span> &nbsp;·&nbsp; Selected Work</div>
-        <h2 class="h-display text-ink text-[clamp(36px,4.6vw,64px)] max-w-[14ch]">
-          Seven films from<br/>the last twelve months.
+        <h2 class="h-display text-ink text-[clamp(36px,4.6vw,64px)] max-w-[14ch] pb-1">
+          The work.
         </h2>
       </div>
       <div class="col-span-12 md:col-span-4 md:col-start-9 reveal d1">
-        <p class="text-dim text-[15px] leading-[1.6]">
-          A working archive: commissions, concepts, and the experiments that
-          earned their way out of the studio.
-        </p>
       </div>
     </div>
 
     <!-- Filter -->
     <div class="reveal flex flex-wrap items-center gap-2 mb-10">
-      <button class="filter is-active" data-tab="default">Default <span class="count">07</span></button>
-      <button class="filter" data-tab="concepts">Concepts</button>
+      <button class="filter is-active" data-tab="concepts">Concepts</button>
       <button class="filter" data-tab="directed">Directed</button>
     </div>
 
-    <div data-panel="default">
-
-    <!-- Grid -->
-    <div class="grid grid-cols-12 gap-5">
-
-      <a href="projects/atmosphere.html" class="project col-span-12 md:col-span-7">
-        <div class="thumb wide">
-          <img src="https://picsum.photos/seed/atmosphere-grid/1200/750" alt="Atmosphere" />
-          <span class="thumb-tag">Entertainment · Short Film · 2026</span>
-          <span class="thumb-play">
-            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
-          </span>
-        </div>
-        <div class="mt-4 flex items-start justify-between gap-4">
-          <div>
-            <h3 class="h-section text-ink text-[22px]">Atmosphere</h3>
-            <p class="text-dim text-[14px] mt-1">A four‑minute meditation on weather, memory, and machine recall.</p>
-          </div>
-          <span class="mono text-[11px] text-mute mt-1">01 / 07</span>
-        </div>
-      </a>
-
-      <a href="projects/levana-lucid-dream.html" class="project col-span-12 md:col-span-5">
-        <div class="thumb tall">
-          <img src="https://picsum.photos/seed/levana-lucid/800/1066" alt="Levana — Lucid Dream" />
-          <span class="thumb-tag">Brand · Music · 2025</span>
-          <span class="thumb-play">
-            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
-          </span>
-        </div>
-        <div class="mt-4 flex items-start justify-between gap-4">
-          <div>
-            <h3 class="h-section text-ink text-[22px]">Levana — Lucid Dream</h3>
-            <p class="text-dim text-[14px] mt-1">A campaign film for Levana's S/S drop, directed and finished in‑studio.</p>
-          </div>
-          <span class="mono text-[11px] text-mute mt-1">02 / 07</span>
-        </div>
-      </a>
-
-      <a href="projects/quiet-index.html" class="project col-span-12 md:col-span-4">
-        <div class="thumb">
-          <img src="https://picsum.photos/seed/quiet-index/700/875" alt="Quiet Index" />
-          <span class="thumb-tag">Concept · 2025</span>
-          <span class="thumb-play">
-            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
-          </span>
-        </div>
-        <div class="mt-4 flex items-start justify-between gap-4">
-          <div>
-            <h3 class="h-section text-ink text-[20px]">Quiet Index</h3>
-            <p class="text-dim text-[13px] mt-1">A self‑initiated concept short.</p>
-          </div>
-          <span class="mono text-[11px] text-mute mt-1">03</span>
-        </div>
-      </a>
-
-      <a href="projects/morrow-skincare.html" class="project col-span-12 md:col-span-4">
-        <div class="thumb">
-          <img src="https://picsum.photos/seed/morrow-skin/700/875" alt="Morrow Skincare" />
-          <span class="thumb-tag">Social · Brand · 2025</span>
-          <span class="thumb-play">
-            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
-          </span>
-        </div>
-        <div class="mt-4 flex items-start justify-between gap-4">
-          <div>
-            <h3 class="h-section text-ink text-[20px]">Morrow — Skincare</h3>
-            <p class="text-dim text-[13px] mt-1">Performance‑driven social.</p>
-          </div>
-          <span class="mono text-[11px] text-mute mt-1">04</span>
-        </div>
-      </a>
-
-      <a href="projects/hermes-carre-90.html" class="project col-span-12 md:col-span-4">
-        <div class="thumb">
-          <img src="https://picsum.photos/seed/hermes-carre/700/875" alt="Hermès — Carré 90" />
-          <span class="thumb-tag">Brand · Luxury · 2024</span>
-          <span class="thumb-play">
-            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
-          </span>
-        </div>
-        <div class="mt-4 flex items-start justify-between gap-4">
-          <div>
-            <h3 class="h-section text-ink text-[20px]">Hermès — Carré 90</h3>
-            <p class="text-dim text-[13px] mt-1">A 30s spot for the silk archive.</p>
-          </div>
-          <span class="mono text-[11px] text-mute mt-1">05</span>
-        </div>
-      </a>
-
-      <a href="projects/field-notes.html" class="project col-span-12 md:col-span-6">
-        <div class="thumb wide">
-          <img src="https://picsum.photos/seed/field-notes/1000/625" alt="Field Notes — Vol. 01" />
-          <span class="thumb-tag">Creative Experiments · 2024</span>
-          <span class="thumb-play">
-            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
-          </span>
-        </div>
-        <div class="mt-4 flex items-start justify-between gap-4">
-          <div>
-            <h3 class="h-section text-ink text-[20px]">Field Notes — Vol. 01</h3>
-            <p class="text-dim text-[13px] mt-1">A reel of in‑progress experiments.</p>
-          </div>
-          <span class="mono text-[11px] text-mute mt-1">06</span>
-        </div>
-      </a>
-
-      <a href="projects/reuters-special.html" class="project col-span-12 md:col-span-6">
-        <div class="thumb wide">
-          <img src="https://picsum.photos/seed/reuters-spec/1000/625" alt="Reuters — Special Report" />
-          <span class="thumb-tag">Corporate · Editorial · 2024</span>
-          <span class="thumb-play">
-            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
-          </span>
-        </div>
-        <div class="mt-4 flex items-start justify-between gap-4">
-          <div>
-            <h3 class="h-section text-ink text-[20px]">Reuters — Special Report</h3>
-            <p class="text-dim text-[13px] mt-1">A long‑form editorial film.</p>
-          </div>
-          <span class="mono text-[11px] text-mute mt-1">07</span>
-        </div>
-      </a>
-
-    </div>
-
-    <div class="mt-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-      <p class="text-dim text-[14px] max-w-md">
-        Five more pieces in the full archive, including private commissions and unreleased experiments.
-      </p>
-      <a href="#" class="btn btn-ghost">
-        <span>Browse full archive</span>
-        <span class="arr">→</span>
-      </a>
-    </div>
-  </div><!-- /panel:default -->
-
   <!-- Panel: Concepts -->
-  <div data-panel="concepts" style="display:none;">
+  <div data-panel="concepts">
     <div class="grid grid-cols-12 gap-5 items-start">
 
       <a href="work/bugatti/index.html" class="project col-span-12 md:col-span-6">
-        <div class="thumb" style="aspect-ratio:2048/1080">
-          <video src="work/bugatti/commercial.mp4" autoplay muted loop playsinline></video>
-          <span class="thumb-tag">Commercial · AI · 2025</span>
+        <div style="position:relative; overflow:hidden; border-radius:14px; border:1px solid var(--border);">
+          <video src="work/bugatti/0322.mp4" autoplay muted loop playsinline style="width:100%; height:auto; display:block;"></video>
+          <span class="thumb-tag">Commercial · 2026</span>
+          <div class="card-includes">
+            <span class="card-inc-label">Includes</span>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Commercial Video</span><span class="card-inc-count">×1</span></div>
+          </div>
           <span class="thumb-play">
             <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
           </span>
@@ -887,7 +857,16 @@
       <a href="work/LINQ/index.html" class="project col-span-12 md:col-span-6">
         <div class="thumb" style="aspect-ratio:2/1">
           <video id="linq-vid" src="work/LINQ/10.%20LINQ%20-%20Logo%20Animation.mp4" autoplay muted playsinline></video>
-          <span class="thumb-tag">Concept · SaaS · 2025</span>
+          <span class="thumb-tag">Full Brand · 2026</span>
+          <div class="card-includes">
+            <span class="card-inc-label">Includes</span>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Website Video</span><span class="card-inc-count">×1</span></div>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Logo Animation</span><span class="card-inc-count">×1</span></div>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Brand Images</span><span class="card-inc-count">×13</span></div>
+          </div>
           <span class="thumb-play">
             <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
           </span>
@@ -905,6 +884,11 @@
         <div class="thumb" style="aspect-ratio:9/16">
           <video src="work/Glasses/glasses%20commercial.mp4" autoplay muted loop playsinline></video>
           <span class="thumb-tag">Commercial · 2025</span>
+          <div class="card-includes">
+            <span class="card-inc-label">Includes</span>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Commercial Video</span><span class="card-inc-count">×1</span></div>
+          </div>
           <span class="thumb-play">
             <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
           </span>
@@ -922,6 +906,11 @@
         <div class="thumb" style="aspect-ratio:2/3">
           <video src="work/Tiffany/1224(9).mp4" autoplay muted loop playsinline></video>
           <span class="thumb-tag">Commercial · 2025</span>
+          <div class="card-includes">
+            <span class="card-inc-label">Includes</span>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Commercial Video</span><span class="card-inc-count">×1</span></div>
+          </div>
           <span class="thumb-play">
             <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
           </span>
@@ -937,8 +926,15 @@
 
       <a href="work/Pelago/index.html" class="project col-span-12 md:col-span-4">
         <div class="thumb" style="aspect-ratio:9/16">
-          <video src="work/Pelago/top%20pelago%20commercial.mp4" autoplay muted loop playsinline></video>
-          <span class="thumb-tag">Brand Identity · 2025</span>
+          <video id="pelago-vid" src="work/Pelago/top%20pelago%20commercial.mp4" autoplay muted playsinline></video>
+          <span class="thumb-tag">Full Brand · 2026</span>
+          <div class="card-includes" style="max-width:200px; row-gap:4px;">
+            <span class="card-inc-label">Includes</span>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Commercial Videos</span><span class="card-inc-count">×3</span></div>
+            <div class="card-inc-item" style="flex-basis:100%; padding-left:2px;"><span class="card-inc-dot"></span><span>Website Video</span><span class="card-inc-count">×1</span></div>
+            <div class="card-inc-item" style="flex-basis:100%; padding-left:2px;"><span class="card-inc-dot"></span><span>Brand Images</span><span class="card-inc-count">×3</span></div>
+          </div>
           <span class="thumb-play">
             <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
           </span>
@@ -955,14 +951,19 @@
       <a href="work/blue the chanel/index.html" class="project col-span-12 md:col-span-8">
         <div class="thumb" style="aspect-ratio:4/3">
           <video src="work/blue the chanel/freepik_video-upscale_2859215733%20(1).mp4" autoplay muted loop playsinline></video>
-          <span class="thumb-tag">Commercial · 2025</span>
+          <span class="thumb-tag">Commercial · 2026</span>
+          <div class="card-includes">
+            <span class="card-inc-label">Includes</span>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Commercial Video</span><span class="card-inc-count">×1</span></div>
+          </div>
           <span class="thumb-play">
             <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
           </span>
         </div>
         <div class="mt-4 flex items-start justify-between gap-4">
           <div>
-            <h3 class="h-section text-ink text-[22px]">Blue the Chanel</h3>
+            <h3 class="h-section text-ink text-[22px]">Bleu de Chanel</h3>
             <p class="text-dim text-[14px] mt-1">A seamless, elegant commercial for a well-known premium brand.</p>
           </div>
           <span class="mono text-[11px] text-mute mt-1">06</span>
@@ -979,27 +980,48 @@
           <img class="fav-slide" src="work/Favorite%20Images/Minimalist_clean_lines_mountains_and_houses_calm_lake_water_d_c4c2643d-44b7-4925-a3bb-efef390e1a5e_0.png" alt="" />
           <img class="fav-slide" src="work/Favorite%20Images/Poster-style_lithographic_artwork._black_panther_in_full_armo_8663bd12-cc0f-4ecf-86ab-b618b4efc26f_0.png" alt="" />
           <img class="fav-slide" src="work/Favorite%20Images/Hyper-realistic_ultra-cinematic_vertical_portrait_of_a_custom_b9a9fb51-0cfe-4924-8722-1a4b2d57b00a_0.png" alt="" />
-          <img class="fav-slide" src="work/Favorite%20Images/httpss.mj.rungRFT4kKTJTw_A_Russian_model_with_clear_skin_hold_116de70f-fda8-45f6-9587-5a6c69213757_0.png" alt="" />
           <img class="fav-slide" src="work/Favorite%20Images/the_complixations_of_humanity_in_the_digital_age_perplexity.c_62663339-aebd-430a-8ef7-3a374c292bd4_2.png" alt="" />
-          <img class="fav-slide" src="work/Favorite%20Images/Ultra-realistic_cinematic_scene._white_chalk_drawing_with_a_g_d8d0a862-9ed0-4742-8edd-b52b6a67eabf_0.png" alt="" />
-          <img class="fav-slide" src="work/Favorite%20Images/Surreal_photographywuxia_in_the_style_of_Moebius_minimalism_f_7f81471d-2dc4-4f3a-b385-03c8d6c46dcb_0.png" alt="" />
           <img class="fav-slide" src="work/Favorite%20Images/Minimal_scenery_dynamic_geometric_patterns_retro_--chaos_20_-_3752ddeb-5c5c-4d8d-8164-7a57a8b20936_0.png" alt="" />
           <img class="fav-slide" src="work/Favorite%20Images/In_the_distance_there_is_an_old_house_on_top_of_grassy_hill_o_e7a25d93-8b6d-418e-beda-88cc199e603a_0.png" alt="" />
-          <img class="fav-slide" src="work/Favorite%20Images/2_color_minimal_wallpaper_illustration_sharp_contrast._japan__df1fae1a-def5-432f-a1c7-ed7aa749a5b8_0.png" alt="" />
-          <img class="fav-slide" src="work/Favorite%20Images/minimalist_vector_art_strong_color_pagani_--ar_916_--raw_--sr_d43c027f-e44a-4d15-8847-7ae169b05bb7_0.png" alt="" />
-          <img class="fav-slide" src="work/Favorite%20Images/magnific_9Rq7FJyNYZ.png" alt="" />
           <img class="fav-slide" src="work/Favorite%20Images/magnific_PiFUbC942C.png" alt="" />
-          <span class="thumb-tag">AI Images · Personal · 2025</span>
+          <span class="thumb-tag">AI Images · 2024–2026</span>
+          <div class="card-includes">
+            <span class="card-inc-label">Includes</span>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>AI Stills</span><span class="card-inc-count">×12</span></div>
+          </div>
           <span class="thumb-play">
             <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
           </span>
         </div>
         <div class="mt-4 flex items-start justify-between gap-4">
           <div>
-            <h3 class="h-section text-ink text-[22px]">Favorites</h3>
+            <h3 class="h-section text-ink text-[22px]">Favorite Images</h3>
             <p class="text-dim text-[14px] mt-1">A personal collection of AI stills — no brief, no campaign, just the frames worth keeping.</p>
           </div>
           <span class="mono text-[11px] text-mute mt-1">07</span>
+        </div>
+      </a>
+
+      <a href="work/Action%20Scenes/index.html" class="project col-span-12 md:col-span-8 md:col-start-3">
+        <div style="position:relative; overflow:hidden; border-radius:14px; border:1px solid var(--border); aspect-ratio:16/9;">
+          <video id="action-vid" src="work/Action%20Scenes/video-50ef3414.mp4" autoplay muted playsinline style="position:absolute; top:0; left:0; width:100%; height:100%; object-fit:cover; display:block;"></video>
+          <span class="thumb-tag">Movie Production · 2026</span>
+          <div class="card-includes">
+            <span class="card-inc-label">Includes</span>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Action Scene</span><span class="card-inc-count">×3</span></div>
+          </div>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">Action Sequences</h3>
+            <p class="text-dim text-[14px] mt-1">Three Hollywood-grade action scenes — advanced AI prompting to unlock the peak of complex motion.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">08</span>
         </div>
       </a>
 
@@ -1010,27 +1032,19 @@
   <div data-panel="directed" style="display:none;">
     <div class="grid grid-cols-12 gap-5">
 
-      <a href="work/QM%20AQC25%20%26%20APS26/index.html" class="project col-span-12 md:col-span-7">
-        <div class="thumb" style="aspect-ratio:unset;">
-          <video src="work/QM%20AQC25%20%26%20APS26/0306(15).mp4" autoplay muted loop playsinline></video>
-          <span class="thumb-tag">Campaign · 2025–2026</span>
-          <span class="thumb-play">
-            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
-          </span>
-        </div>
-        <div class="mt-4 flex items-start justify-between gap-4">
-          <div>
-            <h3 class="h-section text-ink text-[22px]">Quantum Machines</h3>
-            <p class="text-dim text-[14px] mt-1">Conference campaign across AQC25 and APS26.</p>
-          </div>
-          <span class="mono text-[11px] text-mute mt-1">01</span>
-        </div>
-      </a>
-
-      <a href="work/R.T.M%20Digital%20Art/index.html" class="project col-span-12 md:col-span-5">
+      <a href="work/R.T.M%20Digital%20Art/index.html" class="project col-span-12 md:col-span-5 md:col-start-2">
         <div class="thumb" style="aspect-ratio:unset;">
           <img src="work/R.T.M%20Digital%20Art/IMG_0355%20(1).PNG" alt="R.T.M Digital Art" style="object-fit:unset; height:auto;">
-          <span class="thumb-tag">AI Art · 2023</span>
+          <span class="thumb-tag">Digital Art · 2023–2026</span>
+          <div class="card-includes" style="max-width:220px; row-gap:4px;">
+            <span class="card-inc-label">Results</span>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Followers</span><span class="card-inc-count">141K</span></div>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Page Views</span><span class="card-inc-count">200M+</span></div>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Posts</span><span class="card-inc-count">453</span></div>
+          </div>
           <span class="thumb-play">
             <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
           </span>
@@ -1040,14 +1054,23 @@
             <h3 class="h-section text-ink text-[22px]">R.T.M Digital Art</h3>
             <p class="text-dim text-[14px] mt-1">A superhero-themed AI art page — 141K followers, worldwide virality, industry partnerships.</p>
           </div>
-          <span class="mono text-[11px] text-mute mt-1">02</span>
+          <span class="mono text-[11px] text-mute mt-1">01</span>
         </div>
       </a>
 
-      <a href="work/The%20Magic%20Group%20-%20Julius%20Deinius/index.html" class="project col-span-12 md:col-span-7">
+      <a href="work/The%20Magic%20Group%20-%20Julius%20Deinius/index.html" class="project col-span-12 md:col-span-5">
         <div class="thumb" style="aspect-ratio:unset;">
           <img src="work/The%20Magic%20Group%20-%20Julius%20Deinius/profile-page.png" alt="The Magic Group" style="object-fit:unset; height:auto;">
-          <span class="thumb-tag">Content Creation · 2025</span>
+          <span class="thumb-tag">Social Media · 2025</span>
+          <div class="card-includes" style="max-width:220px; row-gap:4px;">
+            <span class="card-inc-label">Results</span>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Followers Grown</span><span class="card-inc-count">180–210K</span></div>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Views</span><span class="card-inc-count">300M+</span></div>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Duration</span><span class="card-inc-count">5 Months</span></div>
+          </div>
           <span class="thumb-play">
             <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
           </span>
@@ -1056,6 +1079,28 @@
           <div>
             <h3 class="h-section text-ink text-[22px]">The Magic Group</h3>
             <p class="text-dim text-[14px] mt-1">Full-time viral content creator for Julius Deinius — 300M+ views in 5 months.</p>
+          </div>
+          <span class="mono text-[11px] text-mute mt-1">02</span>
+        </div>
+      </a>
+
+      <a href="work/QM%20AQC25%20%26%20APS26/index.html" class="project col-span-12 md:col-span-10 md:col-start-2">
+        <div class="thumb" style="aspect-ratio:unset;">
+          <video src="work/QM%20AQC25%20%26%20APS26/0306(15).mp4" autoplay muted loop playsinline></video>
+          <span class="thumb-tag">Client Work · 2025–2026</span>
+          <div class="card-includes">
+            <span class="card-inc-label">Includes</span>
+            <span class="card-inc-sep"></span>
+            <div class="card-inc-item"><span class="card-inc-dot"></span><span>Promotional Videos</span><span class="card-inc-count">×3</span></div>
+          </div>
+          <span class="thumb-play">
+            <svg width="11" height="12" viewBox="0 0 11 12" fill="currentColor"><path d="M0 0 L11 6 L0 12 Z"/></svg>
+          </span>
+        </div>
+        <div class="mt-4 flex items-start justify-between gap-4">
+          <div>
+            <h3 class="h-section text-ink text-[22px]">Quantum Machines</h3>
+            <p class="text-dim text-[14px] mt-1">Conference campaign across AQC25 and APS26.</p>
           </div>
           <span class="mono text-[11px] text-mute mt-1">03</span>
         </div>
@@ -1090,7 +1135,7 @@
       link.addEventListener('click', function(){
         var activeBtn = document.querySelector('#work [data-tab].is-active');
         sessionStorage.setItem('workReturn', JSON.stringify({
-          tab: activeBtn ? activeBtn.getAttribute('data-tab') : 'default',
+          tab: activeBtn ? activeBtn.getAttribute('data-tab') : 'concepts',
           scrollY: window.scrollY
         }));
       });
@@ -1118,21 +1163,16 @@
         <div class="col-span-12 md:col-span-5 reveal">
           <div class="eyebrow mb-4"><span class="eyebrow-coral">03</span> &nbsp;·&nbsp; A note from the studio</div>
           <h2 class="h-display text-ink text-[clamp(28px,3.4vw,46px)] max-w-[16ch]">
-            Concept films are not lesser films.
+            Why so many concepts?
           </h2>
         </div>
         <div class="col-span-12 md:col-span-6 md:col-start-7 reveal d1 space-y-5 text-[15.5px] leading-[1.6]">
-          <p class="text-ink">
-            About a third of what you'll see here was never commissioned. It was
-            made because the image didn't exist yet: to pitch a film, to break
-            a tool, to prove that a frame could hold.
+          <p class="text-dim">
+            "Most of the work I've done is for specific brands, built for their audience, their guidelines, their goals. If you're not that audience, it probably won't hit the same way.
           </p>
           <p class="text-dim">
-            The studio labels self‑initiated work plainly. <span class="text-ink">Concept</span>
-            means nobody paid for it. It does not mean the craft was lighter,
-            the budget smaller, or the result less considered.
+            The concepts are here so you can actually see what I can do. No client, no brief, no limits — just the full range of what's possible with AI. The directed work proves I've done it. The concepts show you where it goes."
           </p>
-          <p class="text-dim">Treat concept films as direction reels for the work that's coming next.</p>
         </div>
       </div>
     </div>
@@ -1162,10 +1202,6 @@
         </span>
         <h3 class="text-ink text-[18px] font-medium mb-2 tracking-[-0.02em]">Entertainment AI Content</h3>
         <p class="text-dim text-[13.5px] leading-[1.6]">Short films, episodic, and narrative pieces built for streamers, festivals, and platforms.</p>
-        <div class="mt-auto pt-6 flex items-center justify-between">
-          <span class="mono text-[11px] text-mute">12 pieces</span>
-          <span class="text-mute text-[16px]">→</span>
-        </div>
       </a>
 
       <a href="#" class="cat-card reveal d1">
@@ -1174,10 +1210,6 @@
         </span>
         <h3 class="text-ink text-[18px] font-medium mb-2 tracking-[-0.02em]">Marketing &amp; Brand</h3>
         <p class="text-dim text-[13.5px] leading-[1.6]">Campaign films, identity films, and hero spots for luxury, fashion, and tech.</p>
-        <div class="mt-auto pt-6 flex items-center justify-between">
-          <span class="mono text-[11px] text-mute">19 pieces</span>
-          <span class="text-mute text-[16px]">→</span>
-        </div>
       </a>
 
       <a href="#" class="cat-card reveal d2">
@@ -1186,10 +1218,6 @@
         </span>
         <h3 class="text-ink text-[18px] font-medium mb-2 tracking-[-0.02em]">Social AI Content</h3>
         <p class="text-dim text-[13.5px] leading-[1.6]">Vertical shorts for TikTok, Reels, and Shorts. Performance‑driven, built to travel.</p>
-        <div class="mt-auto pt-6 flex items-center justify-between">
-          <span class="mono text-[11px] text-mute">22 pieces</span>
-          <span class="text-mute text-[16px]">→</span>
-        </div>
       </a>
 
       <a href="#" class="cat-card reveal">
@@ -1198,10 +1226,6 @@
         </span>
         <h3 class="text-ink text-[18px] font-medium mb-2 tracking-[-0.02em]">AI Video Concepts</h3>
         <p class="text-dim text-[13.5px] leading-[1.6]">Treatments and look‑films. Often the best way to win a pitch is to shoot it first.</p>
-        <div class="mt-auto pt-6 flex items-center justify-between">
-          <span class="mono text-[11px] text-mute">14 pieces</span>
-          <span class="text-mute text-[16px]">→</span>
-        </div>
       </a>
 
       <a href="#" class="cat-card reveal d1">
@@ -1210,10 +1234,6 @@
         </span>
         <h3 class="text-ink text-[18px] font-medium mb-2 tracking-[-0.02em]">Professional &amp; Corporate</h3>
         <p class="text-dim text-[13.5px] leading-[1.6]">Editorial pieces for newsrooms, foundations, and enterprises with stories worth telling well.</p>
-        <div class="mt-auto pt-6 flex items-center justify-between">
-          <span class="mono text-[11px] text-mute">08 pieces</span>
-          <span class="text-mute text-[16px]">→</span>
-        </div>
       </a>
 
       <a href="#" class="cat-card reveal d2">
@@ -1222,10 +1242,6 @@
         </span>
         <h3 class="text-ink text-[18px] font-medium mb-2 tracking-[-0.02em]">Creative Experiments</h3>
         <p class="text-dim text-[13.5px] leading-[1.6]">R&amp;D pieces: pipelines, tools, and unreleased films from the studio's lab.</p>
-        <div class="mt-auto pt-6 flex items-center justify-between">
-          <span class="mono text-[11px] text-mute">17 pieces</span>
-          <span class="text-mute text-[16px]">→</span>
-        </div>
       </a>
     </div>
   </div>
@@ -1241,53 +1257,45 @@
       <div class="portrait">
         <img src="https://picsum.photos/seed/roei-portrait/720/900" alt="Portrait of Roei Lustig" />
       </div>
-      <div class="mt-3 flex items-center justify-between mono text-[11px] text-mute">
-        <span>FIG. 01 — TLV STUDIO, 2026</span>
-        <span>35MM</span>
-      </div>
     </div>
 
     <div class="col-span-12 md:col-span-6 md:col-start-7 reveal d1">
       <div class="eyebrow mb-4"><span class="eyebrow-coral">05</span> &nbsp;·&nbsp; About</div>
       <h2 class="h-display text-ink text-[clamp(36px,4.6vw,58px)] mb-8 max-w-[16ch]">
-        Director's eye.<br/>Prompter's patience.
+        Director's eye.<br/>Generative tools.
       </h2>
 
       <div class="space-y-5 text-[15.5px] leading-[1.65]">
         <p class="text-ink">
-          Roei Lustig is an AI content creator and visual storyteller based
-          in Tel Aviv. The studio directs short films, brand
-          work, and concept pieces using generative tools as a camera, a
-          crew, and a darkroom.
+          Roei Lustig is an AI content creator and visual storyteller based in Tel Aviv.
         </p>
         <p class="text-dim">
-          He came up in live‑action direction in 2017, then turned fully
-          toward generative workflows in late 2022. The studio treats every
-          frame like a frame: composed, color‑graded, and earned.
+          Started in 2023, the moment Midjourney and ChatGPT made it clear that world-class visuals were no longer locked behind a crew and a budget. Jumped in immediately — first with print, stock, and viral social pages, then deeper into content creation, including a full-time role producing content for a large brand in 2025.
         </p>
         <p class="text-dim">
-          Past collaborators include luxury houses, independent musicians,
-          news organizations, and a handful of agencies that prefer the back
-          door. Three to five engagements a year.
+          Now focused on the commercial and advertising market. Working with brands directly from the first idea through script, production, and delivery. Every frame curated, every detail intentional.
+        </p>
+        <p class="text-dim">
+          The technology moves fast. The goal is always to be one step ahead of it.
         </p>
       </div>
 
       <div class="mt-10 grid grid-cols-2 gap-y-6 gap-x-8 pt-8 border-t border-border">
-        <div>
+        <div class="group cursor-default">
           <div class="eyebrow mb-1.5">Based</div>
-          <div class="text-ink text-[15px]">Tel Aviv</div>
+          <div class="text-ink text-[15px] transition-colors duration-200 group-hover:text-coral">Tel Aviv</div>
         </div>
-        <div>
+        <div class="group cursor-default">
           <div class="eyebrow mb-1.5">Active since</div>
-          <div class="text-ink text-[15px]">2023</div>
+          <div class="text-ink text-[15px] transition-colors duration-200 group-hover:text-coral">2023</div>
         </div>
-        <div>
+        <div class="group cursor-default">
           <div class="eyebrow mb-1.5">Languages</div>
-          <div class="text-ink text-[15px]">EN · HE</div>
+          <div class="text-ink text-[15px] transition-colors duration-200 group-hover:text-coral">EN · HE</div>
         </div>
-        <div>
+        <div class="group cursor-default">
           <div class="eyebrow mb-1.5">Representation</div>
-          <div class="text-ink text-[15px]">Direct only</div>
+          <div class="text-ink text-[15px] transition-colors duration-200 group-hover:text-coral">Direct only</div>
         </div>
       </div>
     </div>
@@ -1389,17 +1397,22 @@
           Have a film in mind?
         </h2>
         <p class="mt-5 text-dim text-[16px] max-w-[520px] leading-[1.6]">
-          Remote-first, available worldwide. Currently accepting Q3 — Q4 2026 commissions.
+          Currently replies within — <span class="live-hours">48 hours</span>
         </p>
       </div>
 
       <div class="grid grid-cols-12 gap-8 items-end reveal d1">
         <div class="col-span-12 md:col-span-7">
           <div class="eyebrow mb-3">Direct line</div>
-          <a href="mailto:roeilustig@gmail.com" class="group inline-flex items-center gap-3 text-ink hover:text-coral transition-colors">
-            <span class="h-section text-[clamp(24px,3vw,40px)]">roeilustig@gmail.com</span>
-            <span class="text-[20px] transition-transform group-hover:translate-x-1">↗</span>
-          </a>
+          <div class="inline-flex items-center gap-3">
+            <a href="mailto:roeilustig@gmail.com" class="group inline-flex items-center gap-3 text-ink hover:text-coral transition-colors">
+              <span class="h-section text-[clamp(24px,3vw,40px)]">roeilustig@gmail.com</span>
+              <span class="text-[20px] transition-transform group-hover:translate-x-1">↗</span>
+            </a>
+            <button id="copy-email" aria-label="Copy email address" onclick="navigator.clipboard.writeText('roeilustig@gmail.com').then(()=>{const el=document.getElementById('copy-email');el.innerHTML='<svg width=\'16\' height=\'16\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\'><polyline points=\'20 6 9 17 4 12\'></polyline></svg>';el.classList.add('!text-coral');setTimeout(()=>{el.innerHTML='<svg width=\'16\' height=\'16\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'currentColor\' stroke-width=\'2\'><rect x=\'9\' y=\'9\' width=\'13\' height=\'13\' rx=\'2\' ry=\'2\'></rect><path d=\'M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1\'></path></svg>';el.classList.remove('!text-coral')},2000)})" class="text-mute hover:text-ink transition-colors mt-1">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            </button>
+          </div>
         </div>
         <div class="col-span-12 md:col-span-4 md:col-start-9 flex md:justify-end">
           <a href="mailto:roeilustig@gmail.com" class="btn btn-accent">
@@ -1409,24 +1422,6 @@
         </div>
       </div>
 
-      <div class="reveal d2 mt-12 pt-8 border-t border-border grid grid-cols-2 md:grid-cols-4 gap-y-6 gap-x-6">
-        <div>
-          <div class="eyebrow mb-2">Instagram</div>
-          <a href="#" class="text-ink hover:text-coral text-[15px] transition-colors">@roeilustig</a>
-        </div>
-        <div>
-          <div class="eyebrow mb-2">LinkedIn</div>
-          <a href="#" class="text-ink hover:text-coral text-[15px] transition-colors">Roei Lustig</a>
-        </div>
-        <div>
-          <div class="eyebrow mb-2">WhatsApp</div>
-          <a href="#" class="text-ink hover:text-coral text-[15px] transition-colors">+972 · Direct</a>
-        </div>
-        <div>
-          <div class="eyebrow mb-2">Vimeo</div>
-          <a href="#" class="text-ink hover:text-coral text-[15px] transition-colors">/roeilustig</a>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -1445,7 +1440,7 @@
       <p class="text-dim text-[14px] max-w-sm">AI content creator and visual storyteller. Films for the way the world scrolls.</p>
     </div>
 
-    <div class="col-span-6 md:col-span-3 md:col-start-7">
+    <div class="col-span-6 md:col-span-3 md:col-start-10">
       <div class="eyebrow mb-3">Sitemap</div>
       <ul class="space-y-2">
         <li><a href="#work" class="footer-link">Selected Work</a></li>
@@ -1455,15 +1450,6 @@
       </ul>
     </div>
 
-    <div class="col-span-6 md:col-span-3">
-      <div class="eyebrow mb-3">Elsewhere</div>
-      <ul class="space-y-2">
-        <li><a href="#" class="footer-link">Instagram ↗</a></li>
-        <li><a href="#" class="footer-link">LinkedIn ↗</a></li>
-        <li><a href="#" class="footer-link">Vimeo ↗</a></li>
-        <li><a href="#" class="footer-link">WhatsApp ↗</a></li>
-      </ul>
-    </div>
 
     <div class="col-span-12 pt-8 border-t border-border flex flex-col md:flex-row md:items-center justify-between gap-3 text-[12px] text-mute mono">
       <div>© 2026 Roei Lustig Studio. All rights reserved.</div>
@@ -1484,6 +1470,23 @@
   }
   window.addEventListener('scroll', onScroll, { passive:true });
   onScroll();
+
+  // Mobile menu toggle
+  (function(){
+    const toggle = document.getElementById('navToggle');
+    const menu = document.getElementById('mobileMenu');
+    if (!toggle || !menu) return;
+    function setOpen(open){
+      document.body.classList.toggle('nav-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+    toggle.addEventListener('click', () => setOpen(!document.body.classList.contains('nav-open')));
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') setOpen(false); });
+    // Close menu if resized up to desktop
+    window.matchMedia('(min-width: 768px)').addEventListener('change', e => { if (e.matches) setOpen(false); });
+  })();
 
   // Reveal
   const reveals = document.querySelectorAll('.reveal');
@@ -1540,6 +1543,76 @@
       vid.play();
     });
   })();
+
+  // Smooth crossfade video cycling — polls cur.ended so off-screen videos still progress
+  function setupVideoCycler(vidId, sources) {
+    const mainVid = document.getElementById(vidId);
+    if (!mainVid) return;
+    const parent = mainVid.parentElement;
+
+    mainVid.removeAttribute('autoplay');
+
+    mainVid.style.position = 'absolute';
+    mainVid.style.top = '0'; mainVid.style.left = '0';
+    mainVid.style.width = '100%'; mainVid.style.height = '100%';
+    mainVid.style.objectFit = 'cover';
+    mainVid.style.opacity = '1';
+    mainVid.style.zIndex = '0';
+    mainVid.style.transition = 'opacity 0.6s ease, filter 0.6s ease';
+
+    const altVid = document.createElement('video');
+    altVid.muted = true;
+    altVid.setAttribute('playsinline', '');
+    altVid.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0;z-index:0;transition:opacity 0.6s ease, filter 0.6s ease;filter:saturate(0.85) contrast(1.02) brightness(0.92)';
+    parent.appendChild(altVid);
+
+    let srcIdx = 0;
+    let cur = mainVid, nxt = altVid;
+    let transitioning = false;
+
+    nxt.src = sources[1 % sources.length];
+    nxt.load();
+
+    function doTransition() {
+      if (transitioning) return;
+      transitioning = true;
+      srcIdx = (srcIdx + 1) % sources.length;
+      const afterNext = (srcIdx + 1) % sources.length;
+      nxt.style.zIndex = '1';
+      cur.style.zIndex = '0';
+      nxt.currentTime = 0;
+      nxt.play().catch(() => {});
+      nxt.style.opacity = '1';
+      cur.style.opacity = '0';
+      [cur, nxt] = [nxt, cur];
+      setTimeout(() => {
+        nxt.pause();
+        nxt.src = sources[afterNext];
+        nxt.load();
+        transitioning = false;
+      }, 800);
+    }
+
+    setInterval(() => {
+      if (!transitioning && cur.ended) {
+        doTransition();
+      } else if (!transitioning && cur.paused && !cur.ended && cur.readyState >= 2) {
+        cur.play().catch(() => {});
+      }
+    }, 200);
+  }
+
+  setupVideoCycler('pelago-vid', [
+    'work/Pelago/top%20pelago%20commercial.mp4',
+    'work/Pelago/magnific_video-upscale_2897296438%20(1).mp4',
+    'work/Pelago/magnific_video-upscale_43QVmwV9Aa.mp4'
+  ]);
+
+  setupVideoCycler('action-vid', [
+    'work/Action%20Scenes/video-50ef3414.mp4',
+    'work/Action%20Scenes/0602.mp4',
+    'work/Action%20Scenes/output-03614f78d1b64e038eba9cbeafeab362.mp4'
+  ]);
 </script>
 
 </body>
