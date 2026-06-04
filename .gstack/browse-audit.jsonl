@@ -1,0 +1,6 @@
+{"ts":"2026-05-24T15:20:51.415Z","cmd":"status","args":"","origin":"about:blank","durationMs":4,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-24T15:21:00.086Z","cmd":"goto","args":"http://localhost:3000","origin":"http://localhost:3000/","durationMs":1535,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-24T15:21:10.989Z","cmd":"snapshot","args":"-i -C","origin":"http://localhost:3000/","durationMs":271,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-24T15:21:20.277Z","cmd":"click","args":"@e11","origin":"http://localhost:3000/","durationMs":286,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-24T15:21:26.765Z","cmd":"scroll","args":"[data-panel=\"concepts\"]","origin":"http://localhost:3000/","durationMs":18,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-05-24T15:21:32.303Z","cmd":"screenshot","args":"C:/Users/roeil/AppData/Local/Temp/concepts-tab.png","origin":"http://localhost:3000/","durationMs":4912,"status":"ok","hasCookies":false,"mode":"launched"}

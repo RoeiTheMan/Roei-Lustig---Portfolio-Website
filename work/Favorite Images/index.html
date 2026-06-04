@@ -1,0 +1,326 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favorites — Roei Lustig</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #0a0a0c;
+      --card:   #111114;
+      --border: rgba(255,255,255,0.07);
+      --ink:    #f0f0f0;
+      --dim:    #888;
+      --mute:   #444;
+      --coral:  #ff6a3d;
+    }
+
+    body { background: var(--bg); color: var(--ink); font-family: 'Geist', sans-serif; -webkit-font-smoothing: antialiased; }
+
+    /* NAV */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 40px;
+      transition: background 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+    #nav.scrolled { background: rgba(10,10,12,0.85); backdrop-filter: blur(12px); border-color: var(--border); }
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.08em;
+      color: var(--dim); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--ink); }
+    .nav-back svg { transition: transform 0.2s; }
+    .nav-back:hover svg { transform: translateX(-3px); }
+    .nav-logo { font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.14em; color: var(--mute); }
+
+    /* HERO */
+    .hero { position: relative; min-height: 60vh; display: flex; align-items: flex-end; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(10,10,12,0.55) 0%, rgba(10,10,12,0.0) 35%, rgba(10,10,12,0.85) 100%);
+    }
+    .hero-content { position: relative; z-index: 1; padding: 64px 40px 56px; max-width: 900px; }
+    .eyebrow {
+      font-family: 'Geist Mono', monospace; font-size: 11px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute);
+      margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+    }
+    .eyebrow::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--mute); }
+    .hero-title {
+      font-size: clamp(64px, 10vw, 112px); font-weight: 600;
+      letter-spacing: -0.04em; line-height: 0.9; color: var(--ink);
+    }
+    .hero-meta {
+      display: flex; align-items: center; gap: 16px;
+      font-family: 'Geist Mono', monospace; font-size: 11px;
+      letter-spacing: 0.06em; color: var(--dim); margin-top: 24px;
+    }
+    .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--mute); flex-shrink: 0; }
+
+    /* MAIN */
+    main { max-width: 900px; margin: 0 auto; padding: 0 40px 120px; }
+
+    /* BRIEF */
+    .brief {
+      display: grid; grid-template-columns: 180px 1fr; gap: 48px;
+      padding: 56px 0; border-bottom: 1px solid var(--border);
+    }
+    .row-label { font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: var(--mute); padding-top: 4px; }
+    .brief-body { font-size: 16px; font-weight: 300; line-height: 1.78; color: var(--dim); }
+    .del-badge { display:inline-flex; align-items:center; height:34px; padding:0 16px; border-radius:999px; border:1px solid var(--border); background:var(--card); gap:10px; }
+    .del-badge-label { font-family:"Geist Mono",monospace; font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--mute); }
+    .del-badge-sep { width:1px; height:12px; background:var(--border); }
+    .del-badge-item { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--dim); }
+    .del-dot { width:6px; height:6px; border-radius:50%; background:#ff6a3d; flex-shrink:0; }
+    .del-count { font-family:"Geist Mono",monospace; font-size:10px; color:var(--mute); }
+    .brief-body strong { color: var(--ink); font-weight: 500; }
+
+    /* GALLERY HEADER */
+    .gallery-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 48px 0 24px;
+    }
+    .gallery-label { font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: var(--mute); }
+    .gallery-count { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--mute); }
+
+    /* GALLERY */
+    .gallery { columns: 3; column-gap: 10px; }
+    .gallery-item {
+      break-inside: avoid; margin-bottom: 10px;
+      cursor: zoom-in; overflow: hidden; border-radius: 3px;
+    }
+    .gallery-item img {
+      width: 100%; height: auto; display: block;
+      filter: brightness(0.88);
+      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1), filter 0.4s;
+    }
+    .gallery-item:hover img { transform: scale(1.03); filter: brightness(1); }
+
+    /* LIGHTBOX */
+    .lb-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,0.93); backdrop-filter: blur(10px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    .lb-overlay.active { opacity: 1; pointer-events: all; }
+    .lb-img {
+      max-width: 82vw; max-height: 90vh; object-fit: contain; border-radius: 3px;
+      transition: opacity 0.15s;
+    }
+    .lb-img.switching { opacity: 0; }
+    .lb-close {
+      position: fixed; top: 24px; right: 28px;
+      background: rgba(255,255,255,0.08); backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.12);
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ink); cursor: pointer; transition: background 0.2s, border-color 0.2s;
+    }
+    .lb-close:hover { background: var(--coral); border-color: var(--coral); }
+    .lb-arrow {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.08); backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.12);
+      width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ink); cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .lb-arrow:hover { background: rgba(255,255,255,0.16); transform: translateY(-50%) scale(1.08); }
+    #lbPrev { left: 24px; }
+    #lbNext { right: 24px; }
+    .lb-counter {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+      font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.08em;
+      color: var(--mute);
+    }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.08s; }
+    .d2 { transition-delay: 0.16s; }
+
+    @media (max-width: 640px) {
+      #nav { padding: 16px 20px; }
+      .hero-content { padding: 64px 20px 40px; }
+      main { padding: 0 20px 80px; }
+      .brief { grid-template-columns: 1fr; gap: 16px; }
+      .gallery { columns: 2; }
+      #lbPrev { left: 12px; }
+      #lbNext { right: 12px; }
+    }
+    @media (max-width: 480px) {
+      nav { padding: 16px 18px; }
+      .nav-back { min-height: 44px; display: inline-flex; align-items: center; }
+      .hero-title { font-size: clamp(40px, 13vw, 64px); }
+      .hero-meta { flex-wrap: wrap; row-gap: 6px; }
+      .del-badge { flex-wrap: wrap; height: auto; padding: 8px 14px; row-gap: 6px; }
+      .video-caption { font-size: 10px; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="../../index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7L9 12"/></svg>
+    Back to work
+  </a>
+  <span class="nav-logo">R. LUSTIG</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="hero.jpg" alt="" />
+  </div>
+  <div class="hero-content">
+    <div class="eyebrow reveal">AI Images · Personal · 2025</div>
+    <h1 class="hero-title reveal d1">Favorites</h1>
+    <div class="hero-meta reveal d2">
+      <span>12 stills</span>
+      <span class="dot"></span>
+      <span>Midjourney</span>
+      <span class="dot"></span>
+      <span>Personal work</span>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main>
+  <div class="brief">
+    <div class="row-label reveal">Direction</div>
+    <p class="brief-body reveal d1">
+      No brief. No client. No campaign. Just <strong>12 AI-generated frames</strong> made for the sake of making — the ones that stuck. A mix of <strong>portraiture, architecture, surrealism, and minimalism</strong>, built image by image over time.
+    </p>
+  </div>
+
+  <div class="del-badge reveal" style="margin:28px 0;">
+    <span class="del-badge-label">Includes</span>
+    <span class="del-badge-sep"></span>
+    <div class="del-badge-item"><span class="del-dot"></span><span>AI Stills</span><span class="del-count">×12</span></div>
+  </div>
+
+  <div class="gallery-header reveal">
+    <span class="gallery-label">Gallery</span>
+    <span class="gallery-count">12 images</span>
+  </div>
+
+  <div class="gallery reveal d1">
+    <div class="gallery-item"><img src="httpss.mj.runPxpDdWfCty0_aesthetic_minimalist_skincare_model__75c0aaae-20a7-4d27-8817-1db055489a24_0.png" alt="" /></div>
+    <div class="gallery-item"><img src="Surreal_ink_fusion_art_hyper-realistic_4K_quality._A_space_sh_0aa32cb6-71bd-498f-8902-43ccde93bc90_0.png" alt="" /></div>
+    <div class="gallery-item"><img src="Hyper-realistic_ultra-cinematic_vertical_portrait_of_a_custom_b9a9fb51-0cfe-4924-8722-1a4b2d57b00a_0.png" alt="" /></div>
+    <div class="gallery-item"><img src="Poster-style_lithographic_artwork._superman_by_henry_cavill_i_5e404825-8847-4dba-92d7-67b536e8d844_0.png" alt="" /></div>
+    <div class="gallery-item"><img src="Ultra-realistic_close-up_of_a_majestic_white_leopard_in_a_des_5b140388-4e46-4b3d-ae95-ae04f8b9c34b_2.png" alt="" /></div>
+    <div class="gallery-item"><img src="ArchiDaily_magazine_award-winning_photography_luxury_parametr_0b24502b-b757-4cda-bc93-bcca2ed54063_0.png" alt="" /></div>
+    <div class="gallery-item"><img src="Poster-style_lithographic_artwork._black_panther_in_full_armo_8663bd12-cc0f-4ecf-86ab-b618b4efc26f_0.png" alt="" /></div>
+    <div class="gallery-item"><img src="Minimalist_clean_lines_mountains_and_houses_calm_lake_water_d_c4c2643d-44b7-4925-a3bb-efef390e1a5e_0.png" alt="" /></div>
+    <div class="gallery-item"><img src="the_complixations_of_humanity_in_the_digital_age_perplexity.c_62663339-aebd-430a-8ef7-3a374c292bd4_2.png" alt="" /></div>
+    <div class="gallery-item"><img src="Minimal_scenery_dynamic_geometric_patterns_retro_--chaos_20_-_3752ddeb-5c5c-4d8d-8164-7a57a8b20936_0.png" alt="" /></div>
+    <div class="gallery-item"><img src="In_the_distance_there_is_an_old_house_on_top_of_grassy_hill_o_e7a25d93-8b6d-418e-beda-88cc199e603a_0.png" alt="" /></div>
+    <div class="gallery-item"><img src="magnific_PiFUbC942C.png" alt="" /></div>
+  </div>
+</main>
+
+<!-- LIGHTBOX -->
+<div class="lb-overlay" id="lb">
+  <button class="lb-close" id="lbClose">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg>
+  </button>
+  <button class="lb-arrow" id="lbPrev">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3L5 9L11 15"/></svg>
+  </button>
+  <img class="lb-img" id="lbImg" src="" alt="" />
+  <button class="lb-arrow" id="lbNext">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3L13 9L7 15"/></svg>
+  </button>
+  <div class="lb-counter" id="lbCounter"></div>
+</div>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+  const obs = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+  }), { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Lightbox
+  const lb = document.getElementById('lb');
+  const lbImg = document.getElementById('lbImg');
+  const lbCounter = document.getElementById('lbCounter');
+  let images = [];
+  let current = 0;
+
+  function showImage(idx) {
+    lbImg.classList.add('switching');
+    setTimeout(() => {
+      lbImg.src = images[idx];
+      lbCounter.textContent = (idx + 1) + ' / ' + images.length;
+      lbImg.classList.remove('switching');
+    }, 150);
+  }
+
+  function openLb(idx) {
+    current = idx;
+    lbImg.src = images[idx];
+    lbCounter.textContent = (idx + 1) + ' / ' + images.length;
+    lb.classList.add('active');
+  }
+
+  function closeLb() { lb.classList.remove('active'); lbImg.src = ''; }
+
+  // After all images load, sort by visual position (offsetTop/offsetLeft are scroll-independent)
+  window.addEventListener('load', () => {
+    const allItems = Array.from(document.querySelectorAll('.gallery-item'));
+    const sorted = allItems
+      .map(el => ({ el, top: el.offsetTop, left: el.offsetLeft }))
+      .sort((a, b) => a.top !== b.top ? a.top - b.top : a.left - b.left);
+
+    images = sorted.map(item => item.el.querySelector('img').src);
+
+    sorted.forEach((item, visualIdx) => {
+      item.el.addEventListener('click', () => openLb(visualIdx));
+    });
+  });
+
+  document.getElementById('lbClose').addEventListener('click', closeLb);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+
+  document.getElementById('lbPrev').addEventListener('click', e => {
+    e.stopPropagation();
+    current = (current - 1 + images.length) % images.length;
+    showImage(current);
+  });
+
+  document.getElementById('lbNext').addEventListener('click', e => {
+    e.stopPropagation();
+    current = (current + 1) % images.length;
+    showImage(current);
+  });
+
+  document.addEventListener('keydown', e => {
+    if (!lb.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLb();
+    if (e.key === 'ArrowLeft') { current = (current - 1 + images.length) % images.length; showImage(current); }
+    if (e.key === 'ArrowRight') { current = (current + 1) % images.length; showImage(current); }
+  });
+</script>
+
+</body>
+</html>

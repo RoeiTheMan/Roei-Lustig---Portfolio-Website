@@ -1,0 +1,83 @@
+<h2>Corrected page layout — confirm this structure</h2>
+<p class="subtitle">All aspect ratios preserved. Click to confirm or tell me what to adjust.</p>
+
+<div class="mockup" style="max-width:680px;margin:0 auto;">
+  <div class="mockup-header">work/Pelago/index.html</div>
+  <div class="mockup-body" style="background:#0a0a0c;padding:20px;display:flex;flex-direction:column;gap:20px;">
+
+    <!-- HERO -->
+    <div style="position:relative;background:#111114;border-radius:6px;height:56px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.07);">
+      <span style="color:#555;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;">Hero — frozen frame from main commercial</span>
+      <span style="position:absolute;bottom:6px;right:10px;color:#333;font-size:10px;">click → lightbox</span>
+    </div>
+
+    <!-- NAV + BRIEF -->
+    <div style="background:#111114;border-radius:6px;height:28px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.05);">
+      <span style="color:#444;font-size:10px;">nav · brief · deliverables</span>
+    </div>
+
+    <!-- 3 COMMERCIALS — main elevated -->
+    <div>
+      <div style="color:#444;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">Commercials</div>
+      <div style="display:flex;align-items:flex-end;gap:8px;">
+        <div style="flex:1;background:#111114;border-radius:5px;height:52px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.05);margin-bottom:0px;">
+          <span style="color:#444;font-size:10px;">concept</span>
+        </div>
+        <!-- Main elevated — sits higher (negative margin-top or transform up) -->
+        <div style="flex:1.4;background:#1a1a20;border-radius:5px;height:68px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.12);transform:translateY(-12px);">
+          <span style="color:#888;font-size:10px;font-weight:600;">main ↑</span>
+        </div>
+        <div style="flex:1;background:#111114;border-radius:5px;height:52px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.05);">
+          <span style="color:#444;font-size:10px;">concept</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WEBSITE VIDEO — 16:9 full width -->
+    <div style="background:#111114;border-radius:6px;height:44px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.05);">
+      <span style="color:#444;font-size:10px;letter-spacing:0.06em;">Website demo — 16:9, full width · click → lightbox</span>
+    </div>
+
+    <!-- 3 IMAGES — equal columns -->
+    <div>
+      <div style="color:#444;font-size:9px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">Identity</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+        <div style="background:#111114;border-radius:5px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:4px;border:1px solid rgba(255,255,255,0.05);">
+          <div style="width:28px;height:28px;background:#082F63;border-radius:50%;"></div>
+          <span style="color:#333;font-size:9px;">Symbol</span>
+        </div>
+        <div style="background:#111114;border-radius:5px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:4px;border:1px solid rgba(255,255,255,0.07);">
+          <div style="display:flex;align-items:center;gap:4px;">
+            <div style="width:16px;height:16px;background:#082F63;border-radius:50%;"></div>
+            <span style="color:#082F63;font-size:9px;font-weight:700;">PELAGO</span>
+          </div>
+          <span style="color:#333;font-size:9px;">Full logo</span>
+        </div>
+        <div style="background:#111114;border-radius:5px;padding:10px;display:flex;flex-direction:column;align-items:center;gap:4px;border:1px solid rgba(255,255,255,0.05);">
+          <div style="width:36px;height:28px;background:#e8e0d5;border-radius:3px;display:flex;align-items:center;justify-content:center;">
+            <div style="width:12px;height:10px;background:#082F63;border-radius:1px;"></div>
+          </div>
+          <span style="color:#333;font-size:9px;">Print & scale</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="options" style="margin-top:24px;">
+  <div class="option" data-choice="confirmed" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>Structure confirmed</h3>
+      <p>Hero → brief → 3 commercials (main elevated) → website video → 3 identity images</p>
+    </div>
+  </div>
+  <div class="option" data-choice="adjust" onclick="toggleSelect(this)">
+    <div class="letter">✎</div>
+    <div class="content">
+      <h3>Needs adjustment</h3>
+      <p>Tell me what to change in the terminal</p>
+    </div>
+  </div>
+</div>

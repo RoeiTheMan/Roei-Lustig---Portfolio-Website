@@ -1,0 +1,475 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pelago — Roei Lustig</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #0a0a0c;
+      --card:   #111114;
+      --border: rgba(255,255,255,0.07);
+      --ink:    #f0f0f0;
+      --dim:    #888;
+      --mute:   #444;
+      --coral:  #ff6a3d;
+    }
+
+    html { background: var(--bg); color: var(--ink); font-family: 'Geist', sans-serif; -webkit-font-smoothing: antialiased; }
+    body { min-height: 100vh; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      padding: 22px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.4s ease, border-color 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(10,10,12,0.8);
+      backdrop-filter: blur(20px) saturate(140%);
+      border-color: var(--border);
+    }
+    .nav-back {
+      display: inline-flex; align-items: center; gap: 10px;
+      color: var(--dim); text-decoration: none;
+      font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--ink); }
+    .nav-back svg { transition: transform 0.2s cubic-bezier(0.22,1,0.36,1); }
+    .nav-back:hover svg { transform: translateX(-4px); }
+    .nav-logo { font-family: 'Geist Mono', monospace; font-size: 11px; color: var(--mute); letter-spacing: 0.1em; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 60vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 48px 48px; overflow: hidden;
+    }
+    .hero-bg { position: absolute; inset: 0; background: url('hero.jpg') center/cover no-repeat; }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(180deg, rgba(10,10,12,0.55) 0%, rgba(10,10,12,0.0) 35%, rgba(10,10,12,0.75) 100%);
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .eyebrow {
+      font-family: 'Geist Mono', monospace; font-size: 11px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.5);
+      display: flex; align-items: center; gap: 14px; margin-bottom: 16px;
+    }
+    .eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: rgba(255,255,255,0.3); }
+    .hero-title {
+      font-size: clamp(64px, 10vw, 112px);
+      font-weight: 600; letter-spacing: -0.04em; line-height: 0.9;
+      color: #fff; margin-bottom: 24px;
+    }
+    .hero-meta {
+      display: flex; align-items: center; gap: 18px;
+      font-family: 'Geist Mono', monospace; font-size: 11px;
+      color: rgba(255,255,255,0.45); letter-spacing: 0.06em;
+    }
+    .dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.3); flex-shrink: 0; }
+
+    /* ── MAIN ── */
+    main { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+    /* ── BRIEF ── */
+    .brief {
+      display: grid; grid-template-columns: 180px 1fr; gap: 48px;
+      padding: 48px 0 40px; border-bottom: 1px solid var(--border);
+    }
+    .row-label {
+      font-family: 'Geist Mono', monospace; font-size: 11px;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--mute); padding-top: 4px;
+    }
+    .brief-body { font-size: 16px; line-height: 1.78; font-weight: 300; color: var(--dim); }
+    .brief-body strong { color: var(--ink); font-weight: 500; }
+
+    /* ── DELIVERABLES BADGE ── */
+    .del-badge {
+      display: inline-flex; flex-direction: row; align-items: center;
+      height: 34px; padding: 0 16px; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--card);
+      margin-bottom: 20px; gap: 10px;
+    }
+    .del-badge-label {
+      font-family: 'Geist Mono', monospace; font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--mute);
+    }
+    .del-badge-sep { width: 1px; height: 12px; background: var(--border); }
+    .del-badge-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--dim); }
+    .del-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); flex-shrink: 0; }
+    .del-count { font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--mute); }
+
+    /* ── SECTION HEADINGS ── */
+    .section-label {
+      font-family: 'Geist Mono', monospace; font-size: 11px;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--mute);
+      margin-bottom: 20px;
+    }
+
+    /* ── COMMERCIALS ── */
+    .commercials-section { padding: 48px 0 0; }
+    .commercials-grid {
+      display: flex; align-items: flex-end; gap: 16px;
+    }
+    .commercial-item { flex: 1; }
+    .commercial-item.main { flex: 1.4; transform: translateY(-16px); }
+    .commercial-label {
+      font-family: 'Geist Mono', monospace; font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--mute);
+      margin-top: 10px;
+    }
+
+    /* ── VIDEO WRAP ── */
+    .video-wrap {
+      position: relative; border-radius: 10px; overflow: hidden;
+      background: #0d0d10; cursor: zoom-in;
+      border: 1px solid var(--border);
+    }
+    .video-wrap video { width: 100%; height: auto; display: block; pointer-events: none; }
+    .play-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(10,10,12,0.25);
+      transition: background 0.3s ease;
+    }
+    .video-wrap:hover .play-overlay { background: rgba(10,10,12,0.42); }
+    .play-btn {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.25s cubic-bezier(0.22,1,0.36,1);
+    }
+    .video-wrap:hover .play-btn { background: rgba(255,255,255,0.14); transform: scale(1.1); }
+
+    /* ── WEBSITE DEMO ── */
+    .demo-section { padding: 32px 0 0; }
+    .demo-section .video-wrap { aspect-ratio: 16/9; }
+    .demo-section .video-wrap video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .demo-section .video-wrap { position: relative; }
+
+    /* ── IDENTITY FLOW ── */
+    .identity-section { padding: 64px 0 120px; }
+    .identity-flow {
+      display: flex; align-items: flex-start; gap: 0;
+    }
+    .identity-stage { flex: 1; display: flex; flex-direction: column; gap: 24px; }
+    .stage-header { display: flex; flex-direction: column; gap: 8px; }
+    .stage-num {
+      font-family: 'Geist Mono', monospace; font-size: 11px;
+      letter-spacing: 0.16em; text-transform: uppercase; color: var(--coral);
+    }
+    .stage-title {
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 600; letter-spacing: -0.03em; line-height: 1;
+      color: var(--ink);
+    }
+    .stage-desc {
+      font-size: 13px; line-height: 1.6; color: var(--dim); font-weight: 300;
+      max-width: 220px;
+    }
+    .stage-img-wrap {
+      border-radius: 12px; overflow: hidden; cursor: zoom-in;
+      border: 1px solid var(--border);
+      aspect-ratio: 1 / 1;
+      transition: border-color 0.25s, transform 0.25s cubic-bezier(0.22,1,0.36,1);
+    }
+    .stage-img-wrap:hover { border-color: rgba(255,255,255,0.18); transform: translateY(-3px); }
+    .stage-img-wrap img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .flow-arrow {
+      flex-shrink: 0; width: 48px; display: flex; align-items: center; justify-content: center;
+      padding-top: 80px; color: var(--mute);
+    }
+    .flow-arrow svg { flex-shrink: 0; }
+
+    /* ── LIGHTBOX ── */
+    .lb-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(0,0,0,0); opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease, background 0.35s ease;
+    }
+    .lb-overlay.active { opacity: 1; pointer-events: all; background: rgba(0,0,0,0.92); }
+    .lb-media {
+      max-width: 88vw; max-height: 86vh; border-radius: 8px;
+      transform: scale(0.9); opacity: 0;
+      transition: transform 0.38s cubic-bezier(0.22,1,0.36,1), opacity 0.32s ease;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.7); display: none;
+    }
+    .lb-overlay.active .lb-media.visible { transform: scale(1); opacity: 1; display: block; }
+    .lb-close {
+      position: absolute; top: 24px; right: 28px;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: rgba(255,255,255,0.65);
+      transition: background 0.2s, color 0.2s, transform 0.2s cubic-bezier(0.22,1,0.36,1);
+    }
+    .lb-close:hover { background: rgba(255,255,255,0.16); color: #fff; transform: scale(1.1); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.08s; }
+    .d2 { transition-delay: 0.16s; }
+
+    @media (max-width: 768px) {
+      nav { padding: 18px 20px; }
+      .hero { padding: 0 20px 36px; min-height: 50vh; }
+      main { padding: 0 20px; }
+      .brief { grid-template-columns: 1fr; gap: 14px; padding: 36px 0 32px; }
+      .commercials-grid { flex-direction: column; align-items: stretch; }
+      .commercial-item.main { transform: none; flex: 1; }
+      .identity-flow { flex-direction: column; }
+      .flow-arrow { padding-top: 0; transform: rotate(90deg); }
+      .stage-desc { max-width: 100%; }
+    }
+    @media (max-width: 480px) {
+      nav { padding: 16px 18px; }
+      .nav-back { min-height: 44px; display: inline-flex; align-items: center; }
+      .hero-title { font-size: clamp(40px, 13vw, 64px); }
+      .hero-meta { flex-wrap: wrap; row-gap: 6px; }
+      .del-badge { flex-wrap: wrap; height: auto; padding: 8px 14px; row-gap: 6px; }
+      .video-caption { font-size: 10px; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="../../index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7L9 12"/></svg>
+    Back to work
+  </a>
+  <span class="nav-logo">R. LUSTIG</span>
+</nav>
+
+<section class="hero" id="heroWrap">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="eyebrow reveal">Brand Identity · 2025</div>
+    <h1 class="hero-title reveal d1">Pelago</h1>
+    <div class="hero-meta reveal d2">
+      <span>Dir. R. Lustig</span>
+      <span class="dot"></span>
+      <span>Coastal Clothing Brand</span>
+      <span class="dot"></span>
+      <span>Concept</span>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <!-- BRIEF -->
+  <div class="brief">
+    <div class="row-label reveal">Direction</div>
+    <div class="reveal d1">
+      <div class="del-badge">
+        <span class="del-badge-label">Includes</span>
+        <span class="del-badge-sep"></span>
+        <div class="del-badge-item">
+          <span class="del-dot"></span>
+          <span>Commercial Videos</span>
+          <span class="del-count">×3</span>
+        </div>
+        <span class="del-badge-sep"></span>
+        <div class="del-badge-item">
+          <span class="del-dot"></span>
+          <span>Website Video</span>
+          <span class="del-count">×1</span>
+        </div>
+        <span class="del-badge-sep"></span>
+        <div class="del-badge-item">
+          <span class="del-dot"></span>
+          <span>Brand Images</span>
+          <span class="del-count">×3</span>
+        </div>
+      </div>
+      <p class="brief-body">
+        Pelago is a <strong>coastal clothing brand built from scratch</strong> — logo, clothes, packaging, and a full campaign. The concept centers on two brand characters, a man and a woman, each embodying the brand's world. The question behind it all: <strong>can a complete brand identity be created from nothing, and make you feel something?</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- COMMERCIALS -->
+  <section class="commercials-section">
+    <p class="section-label reveal">Commercials</p>
+    <div class="commercials-grid">
+
+      <div class="commercial-item reveal">
+        <div class="video-wrap" data-lb-src="magnific_video-upscale_2897296438%20(1).mp4" data-lb-type="video">
+          <video src="magnific_video-upscale_2897296438%20(1).mp4" preload="metadata" muted playsinline></video>
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg width="13" height="15" viewBox="0 0 13 15" fill="white" style="margin-left:2px"><path d="M1 1L12 7.5L1 14V1Z"/></svg>
+            </div>
+          </div>
+        </div>
+        <p class="commercial-label">Concept</p>
+      </div>
+
+      <div class="commercial-item main reveal d1">
+        <div class="video-wrap" data-lb-src="top%20pelago%20commercial.mp4" data-lb-type="video">
+          <video src="top%20pelago%20commercial.mp4" preload="metadata" muted playsinline></video>
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg width="13" height="15" viewBox="0 0 13 15" fill="white" style="margin-left:2px"><path d="M1 1L12 7.5L1 14V1Z"/></svg>
+            </div>
+          </div>
+        </div>
+        <p class="commercial-label">Main</p>
+      </div>
+
+      <div class="commercial-item reveal d2">
+        <div class="video-wrap" data-lb-src="magnific_video-upscale_43QVmwV9Aa.mp4" data-lb-type="video">
+          <video src="magnific_video-upscale_43QVmwV9Aa.mp4" preload="metadata" muted playsinline></video>
+          <div class="play-overlay">
+            <div class="play-btn">
+              <svg width="13" height="15" viewBox="0 0 13 15" fill="white" style="margin-left:2px"><path d="M1 1L12 7.5L1 14V1Z"/></svg>
+            </div>
+          </div>
+        </div>
+        <p class="commercial-label">Concept</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WEBSITE DEMO -->
+  <section class="demo-section">
+    <p class="section-label reveal">Website</p>
+    <div class="video-wrap reveal d1" data-lb-src="hf_20260524_134529_24b9625b-bd68-4a25-aa1b-e3e13dc6b307.mp4" data-lb-type="video">
+      <video src="hf_20260524_134529_24b9625b-bd68-4a25-aa1b-e3e13dc6b307.mp4" preload="metadata" muted playsinline></video>
+      <div class="play-overlay">
+        <div class="play-btn">
+          <svg width="16" height="18" viewBox="0 0 16 18" fill="white" style="margin-left:2px"><path d="M1 1L15 9L1 17V1Z"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IDENTITY FLOW -->
+  <section class="identity-section">
+    <p class="section-label reveal">Identity</p>
+    <div class="identity-flow">
+
+      <div class="identity-stage reveal">
+        <div class="stage-header">
+          <span class="stage-num">01</span>
+          <h3 class="stage-title">Symbol</h3>
+          <p class="stage-desc">The mark in isolation — the sail and the wave, stripped of everything else.</p>
+        </div>
+        <div class="stage-img-wrap" data-lb-src="pelago-logo-082F63_upscaled.jpg" data-lb-type="image">
+          <img src="pelago-logo-082F63_upscaled.jpg" alt="Pelago — Symbol" />
+        </div>
+      </div>
+
+      <div class="flow-arrow reveal d1">
+        <svg width="32" height="16" viewBox="0 0 32 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M0 8h30M22 1l8 7-8 7"/>
+        </svg>
+      </div>
+
+      <div class="identity-stage reveal d1">
+        <div class="stage-header">
+          <span class="stage-num">02</span>
+          <h3 class="stage-title">Full Logo</h3>
+          <p class="stage-desc">Symbol meets wordmark — the complete identity, ready to lead.</p>
+        </div>
+        <div class="stage-img-wrap" data-lb-src="ChatGPT%20Image%20Apr%2026%2C%202026%2C%2007_04_27%20PM%20(1)_upscaled.jpg" data-lb-type="image">
+          <img src="ChatGPT%20Image%20Apr%2026%2C%202026%2C%2007_04_27%20PM%20(1)_upscaled.jpg" alt="Pelago — Full Logo" />
+        </div>
+      </div>
+
+      <div class="flow-arrow reveal d2">
+        <svg width="32" height="16" viewBox="0 0 32 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M0 8h30M22 1l8 7-8 7"/>
+        </svg>
+      </div>
+
+      <div class="identity-stage reveal d2">
+        <div class="stage-header">
+          <span class="stage-num">03</span>
+          <h3 class="stage-title">Print & Scale</h3>
+          <p class="stage-desc">The mark across every surface — bag, box, tissue, tag.</p>
+        </div>
+        <div class="stage-img-wrap" data-lb-src="magnific_vu2UskVa47.png" data-lb-type="image">
+          <img src="magnific_vu2UskVa47.png" alt="Pelago — Print &amp; Scale" />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- LIGHTBOX -->
+<div class="lb-overlay" id="lb">
+  <button class="lb-close" id="lbClose">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1 1l12 12M13 1L1 13"/></svg>
+  </button>
+  <video class="lb-media" id="lbVid" controls playsinline></video>
+  <img class="lb-media" id="lbImg" alt="" />
+</div>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 30), { passive: true });
+
+  // Reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Lightbox
+  const lb = document.getElementById('lb');
+  const lbVid = document.getElementById('lbVid');
+  const lbImg = document.getElementById('lbImg');
+  const lbClose = document.getElementById('lbClose');
+
+  document.querySelectorAll('[data-lb-src]').forEach(el => {
+    el.addEventListener('click', () => {
+      const src = el.dataset.lbSrc;
+      const type = el.dataset.lbType;
+      lbVid.classList.remove('visible');
+      lbImg.classList.remove('visible');
+      if (type === 'video') {
+        lbVid.src = src;
+        lbVid.classList.add('visible');
+        lbVid.play();
+      } else {
+        lbImg.src = src;
+        lbImg.classList.add('visible');
+      }
+      lb.classList.add('active');
+    });
+  });
+
+  function closeLb() {
+    lb.classList.remove('active');
+    lbVid.pause();
+    lbVid.currentTime = 0;
+    lbVid.src = '';
+    lbImg.src = '';
+    lbVid.classList.remove('visible');
+    lbImg.classList.remove('visible');
+  }
+
+  lbClose.addEventListener('click', closeLb);
+  lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+</script>
+</body>
+</html>

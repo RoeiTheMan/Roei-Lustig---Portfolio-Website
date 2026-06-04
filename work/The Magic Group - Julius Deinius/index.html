@@ -1,0 +1,316 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Magic Group — Roei Lustig</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #0a0a0c;
+      --card:   #111114;
+      --border: rgba(255,255,255,0.07);
+      --ink:    #f0f0f0;
+      --dim:    #888;
+      --mute:   #444;
+      --coral:  #ff6a3d;
+    }
+
+    body { background: var(--bg); color: var(--ink); font-family: 'Geist', sans-serif; }
+
+    /* NAV */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 40px;
+      transition: background 0.3s ease, border-bottom 0.3s ease;
+    }
+    #nav.scrolled {
+      background: rgba(10,10,12,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-back {
+      display: flex; align-items: center; gap: 8px;
+      color: var(--dim); font-size: 13px; text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-back:hover { color: var(--ink); }
+    .nav-back svg { transition: transform 0.2s ease; }
+    .nav-back:hover svg { transform: translateX(-3px); }
+    .nav-logo { font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; color: var(--mute); }
+
+    /* HERO */
+    .hero { position: relative; min-height: 60vh; display: flex; align-items: flex-end; overflow: hidden; }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('cleaner hero.png') center 20% / cover no-repeat;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(10,10,12,0.55) 0%, rgba(10,10,12,0.0) 35%, rgba(10,10,12,0.75) 100%);
+    }
+    .hero-content { position: relative; z-index: 1; padding: 80px 40px 60px; }
+    .eyebrow {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--dim); margin-bottom: 16px;
+    }
+    .eyebrow::before { content: ''; display: block; width: 20px; height: 1px; background: var(--dim); }
+    .hero-title {
+      font-size: clamp(52px, 8vw, 100px);
+      font-weight: 600; letter-spacing: -0.04em; line-height: 0.9; color: var(--ink);
+    }
+    .hero-meta {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--dim); margin-top: 24px;
+    }
+    .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--mute); }
+
+    /* MAIN */
+    main { max-width: 900px; margin: 0 auto; padding: 80px 40px; }
+
+    /* BRIEF */
+    .brief {
+      display: grid; grid-template-columns: 180px 1fr; gap: 48px;
+      padding-bottom: 56px; border-bottom: 1px solid var(--border); margin-bottom: 56px;
+    }
+    .row-label {
+      font-family: 'Geist Mono', monospace; font-size: 11px;
+      letter-spacing: 0.12em; color: var(--mute); text-transform: uppercase; padding-top: 4px;
+    }
+    .brief-body { font-size: 16px; font-weight: 300; line-height: 1.78; color: var(--dim); }
+    .brief-body strong { color: var(--ink); font-weight: 500; }
+
+    /* BADGE */
+    .del-badge {
+      display: inline-flex; flex-direction: row; align-items: center;
+      height: 34px; padding: 0 16px; border-radius: 999px;
+      border: 1px solid var(--border); background: var(--card);
+      margin-bottom: 64px; gap: 10px;
+    }
+    .del-badge-label {
+      font-family: 'Geist Mono', monospace; font-size: 10px;
+      letter-spacing: 0.1em; color: var(--mute); text-transform: uppercase;
+    }
+    .del-badge-sep { width: 1px; height: 16px; background: var(--border); flex-shrink: 0; }
+    .del-badge-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--dim); }
+    .del-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--coral); flex-shrink: 0; }
+    .del-count { font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--mute); }
+
+    /* SECTIONS */
+    .img-sections { display: flex; flex-direction: column; gap: 80px; }
+
+    .section-heading {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 600; letter-spacing: -0.03em; line-height: 1.05;
+      color: var(--ink); margin-bottom: 32px;
+    }
+    .section-heading em { color: var(--coral); font-style: normal; }
+
+    /* PHONE FRAME */
+    .phone-frame { border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.55), 0 4px 16px rgba(0,0,0,0.3); }
+    .phone-frame img { width: 100%; display: block; }
+
+    /* SECTION 1 — THE PAGE */
+    .page-showcase { display: flex; justify-content: center; }
+    .page-showcase .phone-frame { max-width: 300px; }
+
+    /* SECTION 2 — VIRALITY */
+    .virality-wrap { display: flex; flex-direction: column; gap: 16px; }
+    .stats-bar .phone-frame { border-radius: 14px; }
+    .stats-bar img { width: 100%; display: block; }
+    .reels-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .reels-grid .phone-frame:nth-child(2) { margin-top: 24px; }
+
+    /* SECTION 3 — HIGHLIGHT */
+    .highlight-wrap .phone-frame { border-radius: 14px; max-width: 560px; margin: 0 auto; }
+
+    /* IG LINK */
+    .ig-link { margin-top: 80px; padding-top: 48px; border-top: 1px solid var(--border); }
+    .ig-link a {
+      display: inline-flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--dim); font-size: 14px; font-weight: 300;
+      transition: color 0.2s ease;
+    }
+    .ig-link a:hover .ig-cta { color: var(--coral); }
+    .ig-link a:hover .ig-arrow { transform: translateX(4px); }
+    .ig-label { font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mute); }
+    .ig-sep { width: 1px; height: 14px; background: var(--border); }
+    .ig-cta { font-size: 15px; color: var(--ink); transition: color 0.2s ease; }
+    .ig-arrow { color: var(--coral); font-size: 16px; line-height: 1; transition: transform 0.2s ease; }
+
+    /* REVEAL */
+    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.08s; }
+    .d2 { transition-delay: 0.16s; }
+
+    @media (max-width: 640px) {
+      #nav { padding: 16px 20px; }
+      .hero-content { padding: 80px 20px 48px; }
+      main { padding: 60px 20px; }
+      .brief { grid-template-columns: 1fr; gap: 16px; }
+      .reels-grid { grid-template-columns: 1fr; }
+      .reels-grid .phone-frame:nth-child(2) { margin-top: 0; }
+    }
+    @media (max-width: 480px) {
+      nav { padding: 16px 18px; }
+      .nav-back { min-height: 44px; display: inline-flex; align-items: center; }
+      .hero-title { font-size: clamp(40px, 13vw, 64px); }
+      .hero-meta { flex-wrap: wrap; row-gap: 6px; }
+      .del-badge { flex-wrap: wrap; height: auto; padding: 8px 14px; row-gap: 6px; }
+      .video-caption { font-size: 10px; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="../../index.html" class="nav-back">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7L9 12"/></svg>
+    Back to work
+  </a>
+  <span class="nav-logo">R. LUSTIG</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="eyebrow reveal">Content Creation · 2025</div>
+    <h1 class="hero-title reveal d1">The Magic<br>Group</h1>
+    <div class="hero-meta reveal d2">
+      <span>Julius Deinius</span>
+      <span class="dot"></span>
+      <span>Instagram</span>
+      <span class="dot"></span>
+      <span>London</span>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main>
+
+  <!-- PURPOSE -->
+  <div class="brief">
+    <div class="row-label reveal">Direction</div>
+    <p class="brief-body reveal d1">
+      In April 2025, <strong>The Magic Group</strong> — a London-based content studio led by Julius Dein — ran a competitive three-week hackathon to recruit full-time creators. I was among those hired. The mandate was singular: get as many views as possible. No aesthetic guidelines, no brand constraints. Just reach.<br><br>
+      The team trained us in a precise methodology — how to engineer shock, satire, and controversy into content the algorithm rewards. This style of work can look raw or outrageous on the surface. That's intentional. Subtlety doesn't go viral. Provocation does.<br><br>
+      After the hackathon I was given <strong>full creative control</strong> of the julius.deinius page — built by the whole team during the competition, then handed to me alone to run. Five months. 300 million views.
+    </p>
+  </div>
+
+  <!-- BADGE -->
+  <div class="del-badge reveal">
+    <span class="del-badge-label">Results</span>
+    <span class="del-badge-sep"></span>
+    <div class="del-badge-item">
+      <span class="del-dot"></span>
+      <span>Followers Grown</span>
+      <span class="del-count">180–210K</span>
+    </div>
+    <span class="del-badge-sep"></span>
+    <div class="del-badge-item">
+      <span class="del-dot"></span>
+      <span>Views Delivered</span>
+      <span class="del-count">300M+</span>
+    </div>
+    <span class="del-badge-sep"></span>
+    <div class="del-badge-item">
+      <span class="del-dot"></span>
+      <span>Duration</span>
+      <span class="del-count">5 Months</span>
+    </div>
+  </div>
+
+  <!-- SECTIONS -->
+  <div class="img-sections">
+
+    <!-- Section 1: The Page -->
+    <div class="reveal">
+      <h2 class="section-heading">The <em>Julius Deinius</em> Page</h2>
+      <div class="page-showcase">
+        <div class="phone-frame">
+          <img src="profile-page.png" alt="Julius Deinius Instagram page">
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: Virality -->
+    <div class="reveal d1">
+      <h2 class="section-heading">The <em>Numbers</em></h2>
+      <div class="virality-wrap">
+        <div class="stats-bar">
+          <div class="phone-frame">
+            <img src="profile-stats.png" alt="262K followers">
+          </div>
+        </div>
+        <div class="reels-grid">
+          <div class="phone-frame">
+            <img src="reel-trump-ballet.png" alt="25.6M views">
+          </div>
+          <div class="phone-frame">
+            <img src="reel-putin.png" alt="19.4M views">
+          </div>
+          <div class="phone-frame">
+            <img src="reel-trump-zelensky.png" alt="16.8M views">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: One to Remember -->
+    <div class="reveal d2">
+      <h2 class="section-heading">One to <em>Remember</em></h2>
+      <p style="font-size:15px; font-weight:300; line-height:1.7; color:var(--dim); margin-bottom:28px; max-width:600px;">
+        A piece of content made by me was reposted by rapper <strong style="color:var(--ink); font-weight:500;">50 Cent</strong> — becoming the most liked single piece of content made by me.
+      </p>
+      <div class="highlight-wrap">
+        <div class="phone-frame">
+          <img src="50cent-repost.png" alt="50 Cent repost">
+        </div>
+      </div>
+    </div>
+
+    <!-- IG Link -->
+    <div class="ig-link reveal">
+      <a href="https://www.instagram.com/julius.deinius/" target="_blank" rel="noopener">
+        <span class="ig-label">Instagram</span>
+        <span class="ig-sep"></span>
+        <span class="ig-cta">Check out @julius.deinius</span>
+        <span class="ig-arrow">→</span>
+      </a>
+      <p style="font-family:'Geist Mono',monospace; font-size:10px; letter-spacing:0.08em; color:var(--mute); margin-top:8px; padding-left:2px;">Last piece of content made by me uploaded Sep 15, 2025</p>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

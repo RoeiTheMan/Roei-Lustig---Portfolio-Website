@@ -1,0 +1,53 @@
+<h2>How should the videos be laid out?</h2>
+<p class="subtitle">You have 4 videos: 1 website video + 3 commercial concepts (1 main + 2 others)</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Website video as hero — commercials in a grid below</h3>
+      <p>Website video fills the hero background (frozen first frame, click to open lightbox). The 3 commercials sit in a 3-column grid section below — "main" commercial slightly larger (col-span-7), the other two share the remaining space.</p>
+      <div style="margin-top:12px;background:#1a1a1f;border-radius:8px;padding:16px;font-size:12px;color:#888;">
+        <div style="background:#2a2a30;border-radius:4px;height:48px;display:flex;align-items:center;justify-content:center;color:#555;margin-bottom:8px;">HERO — website video (frozen)</div>
+        <div style="display:grid;grid-template-columns:7fr 5fr 5fr;gap:6px;">
+          <div style="background:#2a2a30;border-radius:4px;height:36px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#666;">main commercial</div>
+          <div style="background:#222228;border-radius:4px;height:36px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#555;">concept 2</div>
+          <div style="background:#222228;border-radius:4px;height:36px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#555;">concept 3</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Main commercial as hero — website video + others in grid</h3>
+      <p>The strongest commercial is the hero. Website video and remaining 2 concepts go below in a grid. Makes the most impactful video the first thing seen.</p>
+      <div style="margin-top:12px;background:#1a1a1f;border-radius:8px;padding:16px;font-size:12px;color:#888;">
+        <div style="background:#2a2a30;border-radius:4px;height:48px;display:flex;align-items:center;justify-content:center;color:#555;margin-bottom:8px;">HERO — main commercial (frozen)</div>
+        <div style="display:grid;grid-template-columns:5fr 7fr 5fr;gap:6px;">
+          <div style="background:#222228;border-radius:4px;height:36px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#555;">website</div>
+          <div style="background:#2a2a30;border-radius:4px;height:36px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#666;">concept 2</div>
+          <div style="background:#222228;border-radius:4px;height:36px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#555;">concept 3</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Two separate sections — website + commercials</h3>
+      <p>Split into two named sections: "Website" (the site video, large) and "Commercials" (3 videos in a grid with labels: Main / Concept A / Concept B). Clearer narrative, more editorial feel.</p>
+      <div style="margin-top:12px;background:#1a1a1f;border-radius:8px;padding:16px;font-size:12px;color:#888;">
+        <div style="background:#2a2a30;border-radius:4px;height:40px;display:flex;align-items:center;justify-content:center;color:#555;margin-bottom:4px;">HERO — website video</div>
+        <div style="color:#444;font-size:10px;margin:6px 0 4px;text-transform:uppercase;letter-spacing:0.1em;">Commercials</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
+          <div style="background:#2a2a30;border-radius:4px;height:32px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#666;">main</div>
+          <div style="background:#222228;border-radius:4px;height:32px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#555;">concept</div>
+          <div style="background:#222228;border-radius:4px;height:32px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#555;">concept</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
